@@ -1,0 +1,41 @@
+.registrationForm {
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #f2f2f2;
+  border: 3px solid rgb(252, 72, 1);
+  border-radius: 13px;
+}
+
+h2 {
+  color: black;
+}
+
+.submitBtn {
+  align-self: center;
+  margin-top: 1rem;
+  background-color: #f2580a;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submitBtn:disabled {
+  background-color: gray;
+}
+
+.submitBtn:hover {
+  background-color: #2e8b57;
+}
+
+@media (max-width: 768px) {
+  .registrationForm {
+    width: 20rem;
+  }
+}

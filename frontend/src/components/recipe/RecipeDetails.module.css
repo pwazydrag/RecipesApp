@@ -1,0 +1,53 @@
+.recipeDetails {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 60vw;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #f2f2f2;
+  border: 3px solid rgb(252, 72, 1);
+  border-radius: 13px;
+}
+
+.recipeGeneralInfo {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.recipeGenerailInfoSingle {
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  width: 60vw;
+}
+
+.actions {
+  display: flex;
+}
+
+.ingredients {
+  text-align: left;
+}
+
+.preparation {
+  text-align: left;
+}
+
+.preparation ol {
+  margin-left: -1rem;
+}
+
+.comments {
+    text-align: left;
+}
+
+.commentSingle{
+    border: 3px solid rgb(252, 72, 1);
+    border-radius: 13px;
+    background-color: white;
+    margin-top: 2rem;
+}
