@@ -5,10 +5,21 @@ import { fetchData } from "../utils/fetchData";
 
 type UseFetchRecipeProps = {
   id: string;
-}
+};
 
 const useFetchRecipe = ({ id }: UseFetchRecipeProps) => {
-  const [data, setData] = useState();
+  type Recipe = {
+    _id: string;
+    title: string;
+    authorId: string;
+    category: string;
+    preparationTime: number;
+    ingredients: string[];
+    preparation: string[];
+    rating: number[];
+  };
+
+  const [data, setData] = useState<Recipe | undefined>();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 

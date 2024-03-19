@@ -2,14 +2,16 @@ import { ChangeEvent, useState, useEffect } from "react";
 import classes from "./RecipeDetails.module.css";
 import jablecznik from "./jablecznik.jpg";
 import Rating from "@mui/material/Rating";
-import useFetchData from "../../hooks/useFetchRecipe";
+import useFetchRecipe from "../../hooks/useFetchRecipe";
+import { calculateAverage } from "../../utils/calculateAverage";
 
 const RecipeDetails = () => {
-  const starValue: number = 4.3;
-  const isLogged: boolean = true;
-
   const [userStarRating, setUserStarRating] = useState<number | null>(null);
-  const { data, isError, isLoading } = useFetchData({id: "65f78cf9cfd9792120517a34"});
+  const { data, isError, isLoading } = useFetchRecipe({
+    id: "65f78cf9cfd9792120517a34",
+  });
+
+  const isLogged: boolean = true;
 
   const handleUserStarRating = (
     event: ChangeEvent<{}>,
@@ -29,14 +31,21 @@ const RecipeDetails = () => {
       </div>
     );
 
+  if (isError)
+    return (
+      <div>
+        <p>Ten przepis nie istnieje...</p>
+      </div>
+    );
+
   return (
     <div className={classes.recipeDetails}>
       <div>
-        <h2>Jabłecznik Stracciatella</h2>
+        <h2>{data?.title}</h2>
         <div>
           <Rating
             name="half-rating-read"
-            value={starValue}
+            value={calculateAverage(data?.rating)}
             precision={0.5}
             readOnly
           ></Rating>
@@ -45,15 +54,15 @@ const RecipeDetails = () => {
       <div className={classes.recipeGeneralInfo}>
         <div>
           <p>Autor</p>
-          <p>Paweł</p>
+          <p>{data?.authorId}</p>
         </div>
         <div>
           <p>Kategoria</p>
-          <p>Ciasto</p>
+          <p>{data?.category}</p>
         </div>
         <div>
           <p>Czas przygotowania</p>
-          <p>60 min</p>
+          <p>{data?.preparationTime}</p>
         </div>
       </div>
       <div>
@@ -73,26 +82,18 @@ const RecipeDetails = () => {
       <div className={classes.ingredients}>
         <p>Lista składników:</p>
         <ul>
-          <li>masło</li>
-          <li>cukier</li>
-          <li>mąka</li>
-          <li>...</li>
+          {/* TUTAJ DOBRZE BĘDZIE ZMIENIĆ KEY NA ingredient._id Z LISTY SKŁADNIKÓW */}
+          {data?.ingredients.map((ingredient, index) => (
+            <li key={index}>{ingredient}</li>
+          ))}
         </ul>
       </div>
       <div className={classes.preparation}>
         <p>Przygotowanie:</p>
         <ol>
-          <li>
-            Żurawinę zalej wrzątkiem, gdy napęcznieje odsącz na sicie. Gruszki
-            umyj, obierz, usuń gniazda nasienne i pokrój w plastry. Skrop sokiem
-            z wyciśniętej cytryny.
-          </li>
-          <li>
-            Do kielicha miksera kuchennego przesiej mąkę, dodaj cukier, proszek
-            do pieczenia i wymieszaj. Następnie dodaj miękkie masło, jajka i
-            połącz składniki.
-          </li>
-          <li>...</li>
+          {data?.preparation.map((prepStep, index) => (
+            <li key={index}>{prepStep}</li>
+          ))}
         </ol>
       </div>
       {!isLogged && (
