@@ -3,9 +3,14 @@ import classes from "./RecipeDetails.module.css";
 import jablecznik from "./jablecznik.jpg";
 import Rating from "@mui/material/Rating";
 import { calculateAverage } from "../../utils/calculateAverage";
-import { Recipe } from "../../hooks/useFetchRecipe";
+import { Recipe, Comment } from "../../utils/types";
 
-const RecipeDetails = ({ data }: { data: Recipe }) => {
+type RecipeDetailsProps = {
+  recipe: Recipe;
+  comments: Comment[];
+};
+
+const RecipeDetails = ({ recipe, comments }: RecipeDetailsProps) => {
   const [userStarRating, setUserStarRating] = useState<number | null>(null);
 
   const isLogged: boolean = true;
@@ -24,11 +29,11 @@ const RecipeDetails = ({ data }: { data: Recipe }) => {
   return (
     <div className={classes.recipeDetails}>
       <div>
-        <h2>{data.title}</h2>
+        <h2>{recipe.title}</h2>
         <div>
           <Rating
             name="half-rating-read"
-            value={calculateAverage(data.rating)}
+            value={calculateAverage(recipe.rating)}
             precision={0.5}
             readOnly
           ></Rating>
@@ -37,15 +42,15 @@ const RecipeDetails = ({ data }: { data: Recipe }) => {
       <div className={classes.recipeGeneralInfo}>
         <div>
           <p>Autor</p>
-          <p>{data.authorId}</p>
+          <p>{recipe.authorId}</p>
         </div>
         <div>
           <p>Kategoria</p>
-          <p>{data.category}</p>
+          <p>{recipe.category}</p>
         </div>
         <div>
           <p>Czas przygotowania</p>
-          <p>{data.preparationTime}</p>
+          <p>{recipe.preparationTime}</p>
         </div>
       </div>
       <div>
@@ -65,8 +70,7 @@ const RecipeDetails = ({ data }: { data: Recipe }) => {
       <div className={classes.ingredients}>
         <p>Lista składników:</p>
         <ul>
-          {/* TUTAJ DOBRZE BĘDZIE ZMIENIĆ KEY NA ingredient._id Z LISTY SKŁADNIKÓW */}
-          {data.ingredients.map((ingredient, index) => (
+          {recipe.ingredients.map((ingredient, index) => (
             <li key={index}>{ingredient}</li>
           ))}
         </ul>
@@ -74,7 +78,7 @@ const RecipeDetails = ({ data }: { data: Recipe }) => {
       <div className={classes.preparation}>
         <p>Przygotowanie:</p>
         <ol>
-          {data.preparation.map((prepStep, index) => (
+          {recipe.preparation.map((prepStep, index) => (
             <li key={index}>{prepStep}</li>
           ))}
         </ol>
@@ -97,27 +101,15 @@ const RecipeDetails = ({ data }: { data: Recipe }) => {
       )}
       <div className={classes.comments}>
         <p>Komentarze:</p>
-        <div className={classes.commentSingle}>
-          <p>
-            SuperUser3000
-            <span className={classes.commentDate}>, 17.03.2024</span>
-          </p>
-          <p>Niesamowity przepis! Bardzo mi się podobał</p>
-        </div>
-        <div className={classes.commentSingle}>
-          <p>
-            SuperUser3000
-            <span className={classes.commentDate}>, 17.03.2024</span>
-          </p>
-          <p>Niesamowity przepis! Bardzo mi się podobał</p>
-        </div>
-        <div className={classes.commentSingle}>
-          <p>
-            SuperUser3000
-            <span className={classes.commentDate}>, 17.03.2024</span>
-          </p>
-          <p>Niesamowity przepis! Bardzo mi się podobał</p>
-        </div>
+        {comments.map((commentSingle) => (
+          <div key={commentSingle._id} className={classes.commentSingle}>
+            <p>
+              {commentSingle.authorId}
+              <span className={classes.commentDate}>, 17.03.2024</span>
+            </p>
+            <p>{commentSingle.comment}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

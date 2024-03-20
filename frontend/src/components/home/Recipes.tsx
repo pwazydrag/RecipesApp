@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Recipe } from "../../hooks/useFetchRecipe";
+import { Recipe } from "../../utils/types";
 
 const Recipes = ({ data }: { data: Recipe[] }) => {
   return (

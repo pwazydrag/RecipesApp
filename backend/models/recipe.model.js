@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const Comment = require("../models/comment.model");
 
 const RecipeSchema = mongoose.Schema({
   title: {
@@ -33,8 +35,11 @@ const RecipeSchema = mongoose.Schema({
     type: [Number],
     required: true,
   },
+  comments: {
+    type: [Schema.Types.ObjectId],
+    ref: "Comment",
+  },
   //zdjecie
-  //komentarze - tablica id
 });
 
 const Recipe = mongoose.model("Recipe", RecipeSchema);

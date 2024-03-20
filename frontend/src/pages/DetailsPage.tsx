@@ -25,7 +25,7 @@ const DetailsPage = () => {
 
   return (
     <div>
-      <RecipeDetails data={data} />
+      <RecipeDetails recipe={data.recipe} comments={data.comments} />
     </div>
   );
 };

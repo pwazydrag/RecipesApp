@@ -2,16 +2,11 @@ import { useState, useEffect } from "react";
 
 import { baseUrl } from "../utils/constant";
 import { fetchData } from "../utils/fetchData";
+import { Recipe, Comment } from "../utils/types";
 
-export type Recipe = {
-  _id: string;
-  title: string;
-  authorId: string;
-  category: string;
-  preparationTime: number;
-  ingredients: string[];
-  preparation: string[];
-  rating: number[];
+type Data = {
+  recipe: Recipe;
+  comments: Comment[];
 };
 
 type UseFetchRecipeProps = {
@@ -19,7 +14,7 @@ type UseFetchRecipeProps = {
 };
 
 const useFetchRecipe = ({ id }: UseFetchRecipeProps) => {
-  const [data, setData] = useState<Recipe | undefined>();
+  const [data, setData] = useState<Data | undefined>();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 

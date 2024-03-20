@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { baseUrl } from "../utils/constant";
 import { fetchData } from "../utils/fetchData";
-import { Recipe } from "./useFetchRecipe";
+import { Recipe } from "../utils/types";
 
 const useFetchRecipes = () => {
   const [data, setData] = useState<Recipe[] | undefined>();

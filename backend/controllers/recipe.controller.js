@@ -1,4 +1,5 @@
 const recipe = require("../models/recipe.model");
+const comment = require("../models/comment.model");
 
 const getRecipes = async (req, res) => {
   try {
@@ -13,7 +14,8 @@ const getRecipe = async (req, res) => {
   try {
     const { id } = req.params;
     const recipeOne = await recipe.findById(id);
-    res.status(200).json(recipeOne);
+    const comments = await comment.find({ _id: { $in: recipeOne.comments } });
+    res.status(200).json({ recipe: recipeOne, comments });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
