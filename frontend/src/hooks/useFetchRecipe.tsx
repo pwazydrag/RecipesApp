@@ -3,22 +3,22 @@ import { useState, useEffect } from "react";
 import { baseUrl } from "../utils/constant";
 import { fetchData } from "../utils/fetchData";
 
+export type Recipe = {
+  _id: string;
+  title: string;
+  authorId: string;
+  category: string;
+  preparationTime: number;
+  ingredients: string[];
+  preparation: string[];
+  rating: number[];
+};
+
 type UseFetchRecipeProps = {
   id: string;
 };
 
 const useFetchRecipe = ({ id }: UseFetchRecipeProps) => {
-  type Recipe = {
-    _id: string;
-    title: string;
-    authorId: string;
-    category: string;
-    preparationTime: number;
-    ingredients: string[];
-    preparation: string[];
-    rating: number[];
-  };
-
   const [data, setData] = useState<Recipe | undefined>();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

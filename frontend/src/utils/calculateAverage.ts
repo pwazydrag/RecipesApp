@@ -1,4 +1,4 @@
-const calculateAverage = (arr: number[] = []) => {
+const calculateAverage = (arr: number[]) => {
   if (!arr || arr.length === 0) {
     return 0;
   }

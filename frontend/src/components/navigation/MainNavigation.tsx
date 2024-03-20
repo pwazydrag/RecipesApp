@@ -16,9 +16,6 @@ const MainNavigation = () => {
           <li>
             <Link to="/login">Logowanie</Link>
           </li>
-          <li>
-            <Link to="/details">Przepis</Link>
-          </li>
         </ul>
       </nav>
     </header>
