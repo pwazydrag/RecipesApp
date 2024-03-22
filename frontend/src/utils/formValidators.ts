@@ -1,3 +1,7 @@
+const isNotEmpty = (value: string) => {
+  return value.length !== 0;
+};
+
 const isLengthValid = (text: string, length: number) => {
   return text.trim().length >= length;
 };
@@ -17,4 +21,4 @@ const arePasswordsCorrect = (password: string, repeatPassword: string) => {
   return password === repeatPassword;
 };
 
-export { isLengthValid, isEmailValid, arePasswordsCorrect };
+export { isNotEmpty, isLengthValid, isEmailValid, arePasswordsCorrect };

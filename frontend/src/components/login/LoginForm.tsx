@@ -1,63 +1,56 @@
-import { useRef, useState } from "react";
-
 import classes from "./LoginForm.module.css";
-import FormGroup from "./FormGroup";
-import { isLengthValid } from "../../utils/formValidators";
+import useInput from "../../hooks/useInput";
+import { isLengthValid, isNotEmpty } from "../../utils/formValidators";
+import Input from "./Input";
 
-const RegistrationForm = () => {
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-
-  const [formValidators, setFormValidators] = useState({
-    isUsernameValid: true,
-    isPasswordValid: true,
-  });
+const LoginForm = () => {
+  const {
+    value: usernameValue,
+    handleInputChange: handleUsernameChange,
+    handleInputBlur: handleUsernameBlur,
+    hasError: usernameHasError,
+  } = useInput("", (value) => isLengthValid(value, 6) && isNotEmpty(value));
+  const {
+    value: passwordValue,
+    handleInputChange: handlePasswordChange,
+    handleInputBlur: handlePasswordBlur,
+    hasError: passwordHasError,
+  } = useInput("", (value) => isLengthValid(value, 6));
 
   const handleFormConfirm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const enteredUsername = usernameRef.current?.value || "";
-    const enteredPassword = passwordRef.current?.value || "";
-
-    const isEnteredUsernameValid = isLengthValid(enteredUsername, 6);
-    const isEnteredPasswordValid = isLengthValid(enteredPassword, 6);
-
-    setFormValidators({
-      isUsernameValid: isEnteredUsernameValid,
-      isPasswordValid: isEnteredPasswordValid,
-    });
-
-    const formIsValid = isEnteredUsernameValid && isEnteredPasswordValid;
-
-    formIsValid &&
-      console.log(
-        "Logowanie przebiegło pomyślnie!",
-        enteredUsername,
-        enteredPassword
-      );
   };
 
   return (
-    <form className={classes.registrationForm} onSubmit={handleFormConfirm}>
+    <form className={classes.loginForm} onSubmit={handleFormConfirm}>
       <h2>Logowanie</h2>
-      <FormGroup
-        id="username"
-        labelText="Nazwa użytkownika"
-        inputType="text"
-        inputPlaceholder="Nazwa użytkownika"
-        inputRef={usernameRef}
-        isValid={formValidators.isUsernameValid}
-        errorMessage="Niepoprawna nazwa użytkownika!"
-      ></FormGroup>
-      <FormGroup
-        id="password"
-        labelText="Hasło"
-        inputType="password"
-        inputPlaceholder="Hasło"
-        inputRef={passwordRef}
-        isValid={formValidators.isPasswordValid}
-        errorMessage="Niepoprawne hasło!"
-      ></FormGroup>
+      <div>
+        <Input
+          label="Nazwa"
+          id="username"
+          type="text"
+          name="username"
+          onBlur={handleUsernameBlur}
+          onChange={handleUsernameChange}
+          value={usernameValue}
+          error={
+            usernameHasError &&
+            "Nazwa użytkownika musi mieć przynajmniej 6 znaków!"
+          }
+        />
+        <Input
+          label="Hasło"
+          id="password"
+          type="password"
+          name="password"
+          onChange={handlePasswordChange}
+          onBlur={handlePasswordBlur}
+          value={passwordValue}
+          error={
+            passwordHasError && "Twoje hasło musi mieć przynajmniej 6 znaków!"
+          }
+        />
+      </div>
       <button type="submit" className={classes.submitBtn}>
         Zaloguj się
       </button>
@@ -65,4 +58,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default LoginForm;

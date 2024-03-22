@@ -1,0 +1,44 @@
+.star {
+  color: #f2580a;
+  margin-left: 0.3rem;
+}
+
+label {
+  color: black;
+  margin-left: 0.2rem;
+  margin-top: 0.7rem;
+  display: flex;
+  margin-bottom: 0.4rem;
+}
+
+input {
+  margin-top: 0.5rem;
+  width: 95%;
+  padding: 0.7rem;
+  border-radius: 0.3rem;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  color: black;
+}
+
+.warningText {
+  color: rgb(217, 27, 27);
+  font-size: 0.8rem;
+  margin-left: 0.2rem;
+}
+
+.warningInput {
+  border-color: #aa0b20;
+  background-color: #ffeff1;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: black !important;
+}
