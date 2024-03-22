@@ -1,0 +1,14 @@
+.recipeGeneralInfo {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+  }
+  
+  .recipeGenerailInfoSingle {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  img {
+    width: 60vw;
+  }

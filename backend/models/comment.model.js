@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const CommentSchema = mongoose.Schema({
   comment: {
@@ -6,13 +7,16 @@ const CommentSchema = mongoose.Schema({
     required: true,
   },
   author: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "User",
     required: true,
-    //type: Schema.Types.ObjectId,
-    //ref: users,
   },
   likes: {
     type: Number,
+    required: true,
+  },
+  commentDate: {
+    type: Date,
     required: true,
   },
 });

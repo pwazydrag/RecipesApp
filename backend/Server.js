@@ -1,8 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const recipeRoute = require("./routes/recipe.route");
 require("dotenv").config();
+
+const recipeRoute = require("./routes/recipe.route");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,7 +22,8 @@ app.get("/", (req, res) => {
 });
 
 // Connecting to the database and starting the server
-mongoose.connect(process.env.MONGO_URL)
+mongoose
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("Connected to database!");
     app.listen(PORT, () => {

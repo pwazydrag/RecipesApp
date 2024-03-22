@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Comment = require("../models/comment.model");
 
 const RecipeSchema = mongoose.Schema({
   title: {
@@ -8,37 +7,52 @@ const RecipeSchema = mongoose.Schema({
     required: true,
   },
   author: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "User",
     required: true,
-    //type: Schema.Types.ObjectId,
-    //ref: users,
   },
   category: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "Category",
     required: true,
-    //type: Schema.Types.ObjectId,
-    //ref: categories, mongoose dodaje s do nazwy modelu category->categorys jak bedzie tu jakis blad to dlatego
   },
   preparationTime: {
     type: Number,
     required: true,
   },
-  ingredients: {
-    type: [String], //jeżeli składniki będą w innej kolekcji to zmienić tu typ trzeba
+  date: {
+    type: Date,
     required: true,
   },
+  ingredients: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Ingredient",
+      required: true,
+    },
+  ],
   preparation: {
     type: [String],
     required: true,
   },
-  rating: {
-    type: [Number],
-    required: true,
-  },
-  comments: {
-    type: [Schema.Types.ObjectId],
-    ref: "Comment",
-  },
+  rating: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Rate",
+    },
+  ],
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
+  likes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Like",
+    },
+  ],
   //zdjecie
 });
 

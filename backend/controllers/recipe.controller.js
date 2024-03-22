@@ -1,5 +1,10 @@
 const recipe = require("../models/recipe.model");
 const comment = require("../models/comment.model");
+const user = require("../models/user.model");
+const category = require("../models/category.model");
+const rate = require("../models/rate.model");
+const ingredient = require("../models/ingredient.model");
+const unit = require("../models/unit.model");
 
 const getRecipes = async (req, res) => {
   try {
@@ -13,9 +18,21 @@ const getRecipes = async (req, res) => {
 const getRecipe = async (req, res) => {
   try {
     const { id } = req.params;
-    const recipeOne = await recipe.findById(id);
-    const comments = await comment.find({ _id: { $in: recipeOne.comments } });
-    res.status(200).json({ recipe: recipeOne, comments });
+    const recipeOne = await recipe
+      .findById(id)
+      .populate({
+        path: "comments",
+        populate: { path: "author", select: "username" },
+      })
+      .populate("author", "username")
+      .populate("category")
+      .populate("rating", "user value")
+      .populate({
+        path: "ingredients",
+        populate: { path: "unit" },
+      });
+
+    res.status(200).json(recipeOne);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

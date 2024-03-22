@@ -1,0 +1,10 @@
+.comments {
+    text-align: left;
+}
+
+.commentSingle{
+    border: 3px solid rgb(252, 72, 1);
+    border-radius: 13px;
+    background-color: white;
+    margin-top: 2rem;
+}
