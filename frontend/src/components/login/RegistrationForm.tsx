@@ -1,92 +1,114 @@
 import classes from "./RegistrationForm.module.css";
-import useInput from "../../hooks/useInput";
-import {
-  isLengthValid,
-  isEmailValid,
-  arePasswordsCorrect,
-  isNotEmpty,
-} from "../../utils/formValidators";
-import Input from "./Input";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { TextField } from "@mui/material";
+import { isEmailValid, arePasswordsCorrect } from "../../utils/formValidators";
+
+type FormData = {
+  username: string;
+  email: string;
+  password: string;
+  repeatPassword: string;
+};
 
 const RegistrationForm = () => {
   const {
-    value: usernameValue,
-    handleInputChange: handleUsernameChange,
-    handleInputBlur: handleUsernameBlur,
-    hasError: usernameHasError,
-  } = useInput("", (value) => isLengthValid(value, 6) && isNotEmpty(value));
-  const {
-    value: emailValue,
-    handleInputChange: handleEmailChange,
-    handleInputBlur: handleEmailBlur,
-    hasError: emailHasError,
-  } = useInput("", (value) => isEmailValid(value) && isNotEmpty(value));
-  const {
-    value: passwordValue,
-    handleInputChange: handlePasswordChange,
-    handleInputBlur: handlePasswordBlur,
-    hasError: passwordHasError,
-  } = useInput("", (value) => isLengthValid(value, 6));
-  const {
-    value: repeatPasswordValue,
-    handleInputChange: handleRepeatPasswordChange,
-    handleInputBlur: handleRepeatPasswordBlur,
-    hasError: repeatPasswordHasError,
-  } = useInput("", (value) => arePasswordsCorrect(value, passwordValue));
+    register,
+    handleSubmit,
+    formState: { errors },
+    trigger,
+    getValues,
+  } = useForm<FormData>({
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      repeatPassword: "",
+    },
+  });
 
-  const handleFormConfirm = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log(data);
   };
 
   return (
-    <form className={classes.registrationForm} onSubmit={handleFormConfirm}>
+    <form
+      className={classes.registrationForm}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <h2>Rejestracja</h2>
-      <div>
-        <Input
-          label="Nazwa"
-          id="username"
-          type="text"
-          name="username"
-          onBlur={handleUsernameBlur}
-          onChange={handleUsernameChange}
-          value={usernameValue}
-          error={
-            usernameHasError &&
-            "Nazwa użytkownika musi mieć przynajmniej 6 znaków!"
-          }
-        />
-        <Input
-          label="Email"
-          id="email"
+      <div className={classes.inputs}>
+        <TextField
+          label="Nazwa użytkownika"
+          {...register("username", {
+            required: "Nazwa użytkownika jest wymagana!",
+            minLength: {
+              value: 6,
+              message: "Nazwa użytkownika musi mieć przynajmniej 6 znaków!",
+            },
+            maxLength: {
+              value: 20,
+              message: "Nazwa użytkownika nie może mieć więcej niż 20 znaków!",
+            },
+          })}
+          onBlur={() => trigger("username")}
+          error={!!errors.username}
+          helperText={errors.username?.message}
+          className={classes.formInput}
+        ></TextField>
+        <TextField
+          label="Adres email"
           type="email"
-          name="email"
-          onBlur={handleEmailBlur}
-          onChange={handleEmailChange}
-          value={emailValue}
-          error={emailHasError && "Wpisz poprawny adres email!"}
-        />
-        <Input
+          {...register("email", {
+            required: "Adres email jest wymagany!",
+            minLength: {
+              value: 8,
+              message: "Adres email musi mieć przynajmniej 8 znaków!",
+            },
+            maxLength: {
+              value: 30,
+              message: "Adres email nie może mieć więcej niż 30 znaków!",
+            },
+            validate: (value) =>
+              isEmailValid(value) || "Niepoprawny adres email!",
+          })}
+          onBlur={() => trigger("email")}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          className={classes.formInput}
+        ></TextField>
+        <TextField
           label="Hasło"
-          id="password"
           type="password"
-          name="password"
-          onChange={handlePasswordChange}
-          onBlur={handlePasswordBlur}
-          value={passwordValue}
-          error={
-            passwordHasError && "Twoje hasło musi mieć przynajmniej 6 znaków!"
-          }
-        />
-        <Input
+          {...register("password", {
+            required: "Hasło jest wymagane!",
+            minLength: {
+              value: 6,
+              message: "Hasło musi mieć przynajmniej 6 znaków!",
+            },
+            maxLength: {
+              value: 20,
+              message: "Hasło nie może mieć więcej niż 20 znaków!",
+            },
+          })}
+          onBlur={() => trigger("password")}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          className={classes.formInput}
+        ></TextField>
+        <TextField
           label="Powtórz hasło"
-          id="repeatPassword"
           type="password"
-          name="repeatPassword"
-          onChange={handleRepeatPasswordChange}
-          onBlur={handleRepeatPasswordBlur}
-          value={repeatPasswordValue}
-          error={repeatPasswordHasError && "Twoje hasła nie są takie same!"}
-        />
+          {...register("repeatPassword", {
+            required: "Powtórzenie hasła jest wymagane!",
+            validate: (value) =>
+              arePasswordsCorrect(value, getValues("password")) ||
+              "Hasła nie są takie same!",
+          })}
+          onBlur={() => trigger("repeatPassword")}
+          error={!!errors.repeatPassword}
+          helperText={errors.repeatPassword?.message}
+          className={classes.formInput}
+        ></TextField>
       </div>
       <button type="submit" className={classes.submitBtn}>
         Zarejestruj się

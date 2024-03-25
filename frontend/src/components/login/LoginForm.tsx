@@ -1,55 +1,70 @@
 import classes from "./LoginForm.module.css";
-import useInput from "../../hooks/useInput";
-import { isLengthValid, isNotEmpty } from "../../utils/formValidators";
-import Input from "./Input";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { TextField } from "@mui/material";
+
+type FormData = {
+  username: string;
+  password: string;
+};
 
 const LoginForm = () => {
   const {
-    value: usernameValue,
-    handleInputChange: handleUsernameChange,
-    handleInputBlur: handleUsernameBlur,
-    hasError: usernameHasError,
-  } = useInput("", (value) => isLengthValid(value, 6) && isNotEmpty(value));
-  const {
-    value: passwordValue,
-    handleInputChange: handlePasswordChange,
-    handleInputBlur: handlePasswordBlur,
-    hasError: passwordHasError,
-  } = useInput("", (value) => isLengthValid(value, 6));
+    register,
+    handleSubmit,
+    formState: { errors },
+    trigger,
+  } = useForm<FormData>({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
 
-  const handleFormConfirm = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log(data);
   };
 
   return (
-    <form className={classes.loginForm} onSubmit={handleFormConfirm}>
+    <form className={classes.loginForm} onSubmit={handleSubmit(onSubmit)}>
       <h2>Logowanie</h2>
-      <div>
-        <Input
-          label="Nazwa"
-          id="username"
-          type="text"
-          name="username"
-          onBlur={handleUsernameBlur}
-          onChange={handleUsernameChange}
-          value={usernameValue}
-          error={
-            usernameHasError &&
-            "Nazwa użytkownika musi mieć przynajmniej 6 znaków!"
-          }
-        />
-        <Input
+      <div className={classes.inputs}>
+        <TextField
+          label="Nazwa użytkownika"
+          {...register("username", {
+            required: "Nazwa użytkownika jest wymagana!",
+            minLength: {
+              value: 6,
+              message: "Nazwa użytkownika musi mieć przynajmniej 6 znaków!",
+            },
+            maxLength: {
+              value: 20,
+              message: "Nazwa użytkownika nie może mieć więcej niż 20 znaków!",
+            },
+          })}
+          onBlur={() => trigger("username")}
+          error={!!errors.username}
+          helperText={errors.username?.message}
+          className={classes.formInput}
+        ></TextField>
+        <TextField
           label="Hasło"
-          id="password"
           type="password"
-          name="password"
-          onChange={handlePasswordChange}
-          onBlur={handlePasswordBlur}
-          value={passwordValue}
-          error={
-            passwordHasError && "Twoje hasło musi mieć przynajmniej 6 znaków!"
-          }
-        />
+          {...register("password", {
+            required: "Hasło jest wymagane!",
+            minLength: {
+              value: 6,
+              message: "Hasło musi mieć przynajmniej 6 znaków!",
+            },
+            maxLength: {
+              value: 20,
+              message: "Haśło nie może mieć więcej niż 20 znaków!",
+            },
+          })}
+          onBlur={() => trigger("password")}
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          className={classes.formInput}
+        ></TextField>
       </div>
       <button type="submit" className={classes.submitBtn}>
         Zaloguj się

@@ -1,42 +1,54 @@
 .loginForm {
-    display: flex;
-    flex-direction: column;
-    width: 30rem;
-    margin: 0 auto;
-    padding: 40px;
-    background-color: #f2f2f2;
-    border: 3px solid rgb(252, 72, 1);
-    border-radius: 13px;
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #f2f2f2;
+  border: 3px solid rgb(252, 72, 1);
+  border-radius: 13px;
+  gap: 2rem;
+}
+
+h2 {
+  color: black;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.submitBtn {
+  align-self: center;
+  background-color: #f2580a;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submitBtn:hover {
+  background-color: #2e8b57;
+}
+
+.formInput input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #f2f2f2 inset !important;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: black !important;
+}
+
+@media (max-width: 768px) {
+  .registrationForm {
+    width: 20rem;
   }
-  
-  h2 {
-    color: black;
-  }
-  
-  .submitBtn {
-    align-self: center;
-    margin-top: 1rem;
-    background-color: #f2580a;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .submitBtn:disabled {
-    background-color: gray;
-  }
-  
-  .submitBtn:hover {
-    background-color: #2e8b57;
-  }
-  
-  @media (max-width: 768px) {
-    .registrationForm {
-      width: 20rem;
-    }
-  }
-  
+}
