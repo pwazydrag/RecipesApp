@@ -1,7 +1,10 @@
 import classes from "./RegistrationForm.module.css";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 import { isEmailValid, arePasswordsCorrect } from "../../utils/formValidators";
+import { useState } from "react";
+import { postDataNotAuth } from "../../utils/postData";
+import { baseUrl } from "../../utils/constant";
 
 type FormData = {
   username: string;
@@ -11,11 +14,13 @@ type FormData = {
 };
 
 const RegistrationForm = () => {
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    trigger,
     getValues,
   } = useForm<FormData>({
     defaultValues: {
@@ -24,96 +29,112 @@ const RegistrationForm = () => {
       password: "",
       repeatPassword: "",
     },
+    mode: "onBlur",
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    try {
+      setIsLoading(true);
+      const responseData = await postDataNotAuth(`${baseUrl}/users/register`, data);
+      if (responseData === "exist") {
+        console.log("Taki użytkownik już istnieje!");
+        setIsError(true);
+        //ustawić że użytkownik zalogowany, przenieść na stronę główną, schować w nawigacji rejestrację/logowanie i pokazać wyloguj
+      } else if (responseData === "notexist") {
+        console.log("Poprawnie zarejestrowano");
+        setIsError(false);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    setIsLoading(false);
   };
 
   return (
-    <form
-      className={classes.registrationForm}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <h2>Rejestracja</h2>
-      <div className={classes.inputs}>
-        <TextField
-          label="Nazwa użytkownika"
-          {...register("username", {
-            required: "Nazwa użytkownika jest wymagana!",
-            minLength: {
-              value: 6,
-              message: "Nazwa użytkownika musi mieć przynajmniej 6 znaków!",
-            },
-            maxLength: {
-              value: 20,
-              message: "Nazwa użytkownika nie może mieć więcej niż 20 znaków!",
-            },
-          })}
-          onBlur={() => trigger("username")}
-          error={!!errors.username}
-          helperText={errors.username?.message}
-          className={classes.formInput}
-        ></TextField>
-        <TextField
-          label="Adres email"
-          type="email"
-          {...register("email", {
-            required: "Adres email jest wymagany!",
-            minLength: {
-              value: 8,
-              message: "Adres email musi mieć przynajmniej 8 znaków!",
-            },
-            maxLength: {
-              value: 30,
-              message: "Adres email nie może mieć więcej niż 30 znaków!",
-            },
-            validate: (value) =>
-              isEmailValid(value) || "Niepoprawny adres email!",
-          })}
-          onBlur={() => trigger("email")}
-          error={!!errors.email}
-          helperText={errors.email?.message}
-          className={classes.formInput}
-        ></TextField>
-        <TextField
-          label="Hasło"
-          type="password"
-          {...register("password", {
-            required: "Hasło jest wymagane!",
-            minLength: {
-              value: 6,
-              message: "Hasło musi mieć przynajmniej 6 znaków!",
-            },
-            maxLength: {
-              value: 20,
-              message: "Hasło nie może mieć więcej niż 20 znaków!",
-            },
-          })}
-          onBlur={() => trigger("password")}
-          error={!!errors.password}
-          helperText={errors.password?.message}
-          className={classes.formInput}
-        ></TextField>
-        <TextField
-          label="Powtórz hasło"
-          type="password"
-          {...register("repeatPassword", {
-            required: "Powtórzenie hasła jest wymagane!",
-            validate: (value) =>
-              arePasswordsCorrect(value, getValues("password")) ||
-              "Hasła nie są takie same!",
-          })}
-          onBlur={() => trigger("repeatPassword")}
-          error={!!errors.repeatPassword}
-          helperText={errors.repeatPassword?.message}
-          className={classes.formInput}
-        ></TextField>
-      </div>
-      <button type="submit" className={classes.submitBtn}>
-        Zarejestruj się
-      </button>
-    </form>
+    <>
+      <form
+        className={classes.registrationForm}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <h2>Rejestracja</h2>
+        <div className={classes.inputs}>
+          <TextField
+            label="Nazwa użytkownika"
+            {...register("username", {
+              required: "Nazwa użytkownika jest wymagana!",
+              minLength: {
+                value: 6,
+                message: "Nazwa użytkownika musi mieć przynajmniej 6 znaków!",
+              },
+              maxLength: {
+                value: 20,
+                message:
+                  "Nazwa użytkownika nie może mieć więcej niż 20 znaków!",
+              },
+            })}
+            error={!!errors.username}
+            helperText={errors.username?.message}
+            className={classes.formInput}
+          ></TextField>
+          <TextField
+            label="Adres email"
+            type="email"
+            {...register("email", {
+              required: "Adres email jest wymagany!",
+              minLength: {
+                value: 8,
+                message: "Adres email musi mieć przynajmniej 8 znaków!",
+              },
+              maxLength: {
+                value: 30,
+                message: "Adres email nie może mieć więcej niż 30 znaków!",
+              },
+              validate: (value) =>
+                isEmailValid(value) || "Niepoprawny adres email!",
+            })}
+            error={!!errors.email}
+            helperText={errors.email?.message}
+            className={classes.formInput}
+          ></TextField>
+          <TextField
+            label="Hasło"
+            type="password"
+            {...register("password", {
+              required: "Hasło jest wymagane!",
+              minLength: {
+                value: 6,
+                message: "Hasło musi mieć przynajmniej 6 znaków!",
+              },
+              maxLength: {
+                value: 20,
+                message: "Hasło nie może mieć więcej niż 20 znaków!",
+              },
+            })}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+            className={classes.formInput}
+          ></TextField>
+          <TextField
+            label="Powtórz hasło"
+            type="password"
+            {...register("repeatPassword", {
+              required: "Powtórzenie hasła jest wymagane!",
+              validate: (value) =>
+                arePasswordsCorrect(value, getValues("password")) ||
+                "Hasła nie są takie same!",
+            })}
+            error={!!errors.repeatPassword}
+            helperText={errors.repeatPassword?.message}
+            className={classes.formInput}
+          ></TextField>
+        </div>
+        <button type="submit" className={classes.submitBtn}>
+          Zarejestruj się
+        </button>
+      </form>
+      {isLoading && <p>Loading...</p>}
+      {isError && <p>Błędne dane logowania! Spróbuj ponownie</p>}
+    </>
   );
 };
 

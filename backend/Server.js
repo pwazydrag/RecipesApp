@@ -4,6 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const recipeRoute = require("./routes/recipe.route");
+const userRoute = require("./routes/user.route");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.use("/api/recipes", recipeRoute);
+app.use("/api/users", userRoute);
 
 // Main Route
 app.get("/", (req, res) => {

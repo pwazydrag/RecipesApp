@@ -9,7 +9,11 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  reqigstration: {
+  password: {
+    type: String,
+    required: true,
+  },
+  registration: {
     type: Date,
     required: true,
   },

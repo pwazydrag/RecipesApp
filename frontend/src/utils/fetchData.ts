@@ -6,3 +6,5 @@ export const fetchData = async (target: string) => {
   const data = await response.json();
   return data;
 };
+
+//dodać tak jak w postData dla auth i notAuth
