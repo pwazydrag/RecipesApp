@@ -14,13 +14,15 @@ const registerUser = async (req, res) => {
   };
 
   try {
-    const checkUsername = await user.findOne({ username: userData.username });
+    const checkUser = await user.findOne({ username: userData.username });
     const checkEmail = await user.findOne({ email: userData.email });
-    if (checkUsername || checkEmail) {
+    if (checkUser || checkEmail) {
       res.status(403).json("exist");
     } else {
-      res.status(200).json("notexist");
       await user.insertMany([userData]);
+      const newUser = await user.findOne({ username: userData.username });
+      const token = newUser.generateAuthToken();
+      res.status(200).json(token);
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -38,8 +40,8 @@ const loginUser = async (req, res) => {
     const result = await bcrypt.compare(data.password, checkUser.password);
 
     if (result) {
-      res.status(200).json("exist");
-      //generujemy token i przechowujemy go
+      const token = checkUser.generateAuthToken();
+      res.status(200).json(token);
     } else {
       res.status(401).json("notexist");
     }

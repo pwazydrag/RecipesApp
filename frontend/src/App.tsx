@@ -4,11 +4,13 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import RootLayout from "./pages/Root";
 import DetailsPage from "./pages/DetailsPage";
+import { AuthProvider } from "./hooks/useAuth";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    //errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/register", element: <RegisterPage /> },
@@ -19,7 +21,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
+  );
 }
 
 export default App;

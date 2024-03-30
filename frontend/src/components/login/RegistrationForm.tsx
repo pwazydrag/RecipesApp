@@ -5,6 +5,8 @@ import { isEmailValid, arePasswordsCorrect } from "../../utils/formValidators";
 import { useState } from "react";
 import { postDataNotAuth } from "../../utils/postData";
 import { baseUrl } from "../../utils/constant";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 type FormData = {
   username: string;
@@ -14,9 +16,9 @@ type FormData = {
 };
 
 const RegistrationForm = () => {
+  const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -31,21 +33,24 @@ const RegistrationForm = () => {
     },
     mode: "onBlur",
   });
+  const { login } = useAuth();
 
   const onSubmit = async (data: FormData) => {
-    try {
-      setIsLoading(true);
-      const responseData = await postDataNotAuth(`${baseUrl}/users/register`, data);
-      if (responseData === "exist") {
-        console.log("Taki użytkownik już istnieje!");
-        setIsError(true);
-        //ustawić że użytkownik zalogowany, przenieść na stronę główną, schować w nawigacji rejestrację/logowanie i pokazać wyloguj
-      } else if (responseData === "notexist") {
-        console.log("Poprawnie zarejestrowano");
-        setIsError(false);
-      }
-    } catch (e) {
-      console.error(e);
+    setIsLoading(true);
+    const response = await postDataNotAuth(`${baseUrl}/users/register`, data);
+    if (response.status === 403) {
+      console.log("Taki użytkownik już istnieje!");
+      setIsError(true);
+    } else if (response.status === 200) {
+      console.log("Poprawnie zarejestrowano!");
+      setIsError(false);
+      login(response.data);
+      navigate("/", { replace: true });
+    } else {
+      console.error(
+        "Wystąpił błąd podczas rejestracji! Spróbuj ponownie później"
+      );
+      setIsError(true);
     }
     setIsLoading(false);
   };
@@ -133,7 +138,7 @@ const RegistrationForm = () => {
         </button>
       </form>
       {isLoading && <p>Loading...</p>}
-      {isError && <p>Błędne dane logowania! Spróbuj ponownie</p>}
+      {isError && <p>Błędne dane rejestracji! Spróbuj ponownie</p>}
     </>
   );
 };

@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 import { baseUrl } from "../../utils/constant";
 import { postDataNotAuth } from "../../utils/postData";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 type FormData = {
   username: string;
@@ -11,9 +13,9 @@ type FormData = {
 };
 
 const LoginForm = () => {
+  const { login } = useAuth();
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -25,24 +27,24 @@ const LoginForm = () => {
     },
     mode: "onBlur",
   });
+  const navigate = useNavigate();
 
   const onSubmit = async (data: FormData) => {
-    try {
-      setIsLoading(true);
-      const responseData = await postDataNotAuth(
-        `${baseUrl}/users/login`,
-        data
+    setIsLoading(true);
+    const response = await postDataNotAuth(`${baseUrl}/users/login`, data);
+    if (response.status === 200) {
+      console.log("Pomyślnie zalogowano!");
+      setIsError(false);
+      login(response.data);
+      navigate("/");
+    } else if (response.status === 401) {
+      console.log("Nieprawidłowe dane logowania!");
+      setIsError(true);
+    } else {
+      console.error(
+        "Wystąpił błąd podczas logowania! Spróbuj ponownie później"
       );
-      if (responseData === "exist") {
-        console.log("Pomyślnie zalogowano!");
-        setIsError(false);
-        //ustawić że użytkownik zalogowany, przenieść na stronę główną, schować w nawigacji rejestrację/logowanie i pokazać wyloguj
-      } else if (responseData === "notexist") {
-        console.log("Nieprawidłowe dane logowania!");
-        setIsError(true);
-      }
-    } catch (e) {
-      console.error(e);
+      setIsError(true);
     }
     setIsLoading(false);
   };
@@ -81,7 +83,7 @@ const LoginForm = () => {
               },
               maxLength: {
                 value: 20,
-                message: "Haśło nie może mieć więcej niż 20 znaków!",
+                message: "Hasło nie może mieć więcej niż 20 znaków!",
               },
             })}
             error={!!errors.password}

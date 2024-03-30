@@ -13,11 +13,11 @@ export const postData = async (
   });
 
   const responseData = await response.json();
-  return responseData;
+  return { data: responseData, status: response.status };
 };
 
 export const postDataAuth = (target: string, data: object) => {
-  //wyciagnąc token z localStorage funkcji getAuthToken
+  //const token = localStorage.getItem("token") albo const { token } = useAuth() do przemyślenia
   return postData(target, data, "tokenTutaj");
 };
 
