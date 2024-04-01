@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 import { baseUrl } from "../../utils/constant";
 import { postDataNotAuth } from "../../utils/postData";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
 type FormData = {
@@ -51,9 +51,12 @@ const LoginForm = () => {
 
   return (
     <>
-      <form className={classes.loginForm} onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className={`${classes.loginForm} w-9/12 md:w-6/12 lg:w-3/12 p-11 mt-4 mx-auto`}
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <h2>Logowanie</h2>
-        <div className={classes.inputs}>
+        <div className="flex flex-col gap-12">
           <TextField
             label="Nazwa użytkownika"
             {...register("username", {
@@ -90,10 +93,16 @@ const LoginForm = () => {
             helperText={errors.password?.message}
             className={classes.formInput}
           ></TextField>
+          <button type="submit" className={classes.submitBtn}>
+            Zaloguj się
+          </button>
+          <Link
+            to="/register"
+            className="no-underline hover:transition-all hover:ease-in-out hover:text-red-400 active:text-red-400"
+          >
+            Nie posiadasz konta? Zarejestruj się!
+          </Link>
         </div>
-        <button type="submit" className={classes.submitBtn}>
-          Zaloguj się
-        </button>
       </form>
       {isLoading && <p>Loading...</p>}
       {isError && <p>Błędne dane logowania! Spróbuj ponownie</p>}

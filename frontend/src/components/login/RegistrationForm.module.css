@@ -1,23 +1,10 @@
 .registrationForm {
   display: flex;
   flex-direction: column;
-  width: 30rem;
-  margin: 0 auto;
-  padding: 40px;
   background-color: #f2f2f2;
   border: 3px solid rgb(252, 72, 1);
   border-radius: 13px;
   gap: 2rem;
-}
-
-.inputs {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
-h2 {
-  color: black;
 }
 
 .submitBtn {
@@ -45,10 +32,4 @@ input:-webkit-autofill:active {
 
 input:-webkit-autofill {
   -webkit-text-fill-color: black !important;
-}
-
-@media (max-width: 768px) {
-  .registrationForm {
-    width: 20rem;
-  }
 }

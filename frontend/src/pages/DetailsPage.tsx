@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import useFetchRecipe from "../hooks/useFetchRecipe";
 import RecipeDetails from "../components/recipe/RecipeDetails";
+import { CircularProgress } from "@mui/material";
 
 const DetailsPage = () => {
   const { id } = useParams();
@@ -11,23 +12,22 @@ const DetailsPage = () => {
 
   if (isLoading)
     return (
-      <div>
-        <p>Loading...</p>
+      <div className="flex flex-col justify-center items-center h-screen">
+        <CircularProgress />
+        <p>Ładujemy twój przepis...</p>
       </div>
     );
 
   if (isError || !data)
     return (
-      <div>
-        <p>Ten przepis nie istnieje...</p>
+      <div className="flex flex-col justify-center items-center h-screen">
+        <p>Coś nie tak z Twoim przepisem - przepraszamy!</p>
       </div>
     );
 
   return (
     <div>
-      <RecipeDetails
-        recipe={data}
-      />
+      <RecipeDetails recipe={data} />
     </div>
   );
 };

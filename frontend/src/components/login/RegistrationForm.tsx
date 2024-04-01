@@ -58,11 +58,11 @@ const RegistrationForm = () => {
   return (
     <>
       <form
-        className={classes.registrationForm}
+        className={`${classes.registrationForm} w-9/12 md:w-6/12 lg:w-4/12 p-11 mt-4 mx-auto`}
         onSubmit={handleSubmit(onSubmit)}
       >
         <h2>Rejestracja</h2>
-        <div className={classes.inputs}>
+        <div className="flex flex-col gap-12">
           <TextField
             label="Nazwa użytkownika"
             {...register("username", {

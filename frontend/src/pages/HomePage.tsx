@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import Recipes from "../components/home/Recipes";
 import useFetchRecipes from "../hooks/useFetchRecipes";
 
@@ -6,15 +7,16 @@ const HomePage = () => {
 
   if (isLoading)
     return (
-      <div>
-        <p>Loading...</p>
+      <div className="flex flex-col justify-center items-center h-screen">
+        <CircularProgress />
+        <p>Ładujemy przepisy...</p>
       </div>
     );
 
   if (isError || !data)
     return (
-      <div>
-        <p>Coś nie tak z twoimi przepisami!</p>
+      <div className="flex flex-col justify-center items-center h-screen">
+        <p>Coś poszło nie tak - przepraszamy!</p>
       </div>
     );
 
