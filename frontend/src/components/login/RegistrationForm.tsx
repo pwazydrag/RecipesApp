@@ -18,7 +18,6 @@ type FormData = {
 const RegistrationForm = () => {
   const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -33,10 +32,10 @@ const RegistrationForm = () => {
     },
     mode: "onBlur",
   });
+
   const { login } = useAuth();
 
   const onSubmit = async (data: FormData) => {
-    setIsLoading(true);
     const response = await postDataNotAuth(`${baseUrl}/users/register`, data);
     if (response.status === 403) {
       console.log("Taki użytkownik już istnieje!");
@@ -52,7 +51,6 @@ const RegistrationForm = () => {
       );
       setIsError(true);
     }
-    setIsLoading(false);
   };
 
   return (
@@ -141,7 +139,6 @@ const RegistrationForm = () => {
           Zarejestruj się
         </button>
       </form>
-      {isLoading && <p>Loading...</p>}
       {isError && <p>Błędne dane rejestracji! Spróbuj ponownie</p>}
     </>
   );

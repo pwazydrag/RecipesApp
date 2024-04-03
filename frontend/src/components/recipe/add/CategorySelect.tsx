@@ -6,16 +6,22 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { Category } from "../../../utils/types";
+import { FormData } from "./AddRecipe";
+import { UseFormRegister, FieldErrors } from "react-hook-form";
 
 type CategorySelectProps = {
   categories: Category[];
-  register: any;
-  errors: any;
+  register: UseFormRegister<FormData>;
+  errors: FieldErrors<FormData>;
 };
 
-const CategorySelect = ({ categories, register, errors }: CategorySelectProps) => {
+const CategorySelect = ({
+  categories,
+  register,
+  errors,
+}: CategorySelectProps) => {
   return (
-    <FormControl fullWidth>
+    <FormControl className="flex-1">
       <InputLabel shrink error={!!errors.category}>
         Kategoria
       </InputLabel>

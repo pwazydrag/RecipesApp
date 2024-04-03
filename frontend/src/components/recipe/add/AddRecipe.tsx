@@ -1,24 +1,26 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import classes from "./AddRecipe.module.css";
 import { Category, Unit } from "../../../utils/types";
 import CategorySelect from "./CategorySelect";
 import { TextField } from "@mui/material";
 import IngredientInput from "./IngredientInput";
 import PreparationInput from "./PreparationInput";
+import { useAuth } from "../../../hooks/useAuth";
+import { baseUrl } from "../../../utils/constant";
+import { postDataAuth } from "../../../utils/postData";
 
-type FormData = {
+export type FormData = {
   title: string;
   preparationTime: number;
   category: string;
   ingredients: {
-    id: string;
     name: string;
     amount: number;
     unit: string;
   }[];
   preparation: {
-    id: string;
     step: string;
   }[];
   img: string;
@@ -32,84 +34,49 @@ type AddRecipeProps = {
 const AddRecipe = ({ categories, units }: AddRecipeProps) => {
   const {
     register,
-    unregister,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm<FormData>({
     defaultValues: {
       title: "",
       category: "",
       preparationTime: 0,
-      ingredients: [],
-      preparation: [],
+      ingredients: [{ name: "", amount: 0, unit: "" }],
+      preparation: [{ step: "" }],
       img: "",
     },
     mode: "onBlur",
   });
 
-  const [idCount, setIdCount] = useState<number>(2);
-  const [ingredients, setIngredients] = useState<FormData["ingredients"]>([
-    {
-      id: `0`,
-      name: "",
-      amount: 0,
-      unit: "",
-    },
-  ]);
+  const ingredients = useFieldArray({
+    control,
+    name: "ingredients",
+  });
 
-  const handleIncrement = () => {
-    setIdCount((prevIdCount) => prevIdCount + 1);
-  };
+  const preparation = useFieldArray({
+    control,
+    name: "preparation",
+  });
 
-  const addIngredient = () => {
-    const newIngredient = {
-      id: `${idCount}`,
-      name: "",
-      amount: 0,
-      unit: "",
-    };
-    setIngredients([...ingredients, newIngredient]);
-    handleIncrement();
-  };
-
-  const removeIngredient = (idToRemove: string) => {
-    if (ingredients.length > 1) {
-      const updatedIngredients = ingredients.filter(
-        (ingredient) => ingredient.id !== idToRemove
-      );
-      setIngredients(updatedIngredients);
-    }
-  };
-
-  const [preparationSteps, setPreparationSteps] = useState<
-    FormData["preparation"]
-  >([
-    {
-      id: `1`,
-      step: "",
-    },
-  ]);
-
-  const addPreparationStep = () => {
-    const newStep = {
-      id: `${idCount}`,
-      step: "",
-    };
-    setPreparationSteps([...preparationSteps, newStep]);
-    handleIncrement();
-  };
-
-  const removePreparationStep = (idToRemove: string) => {
-    if (preparationSteps.length > 1) {
-      const updatedPreparationSteps = preparationSteps.filter(
-        (step) => step.id !== idToRemove
-      );
-      setPreparationSteps(updatedPreparationSteps);
-    }
-  };
+  const { token } = useAuth();
+  const navigate = useNavigate();
+  const [isError, setIsError] = useState(false);
 
   const onSubmit = async (data: FormData) => {
     console.log(data);
+    const response = await postDataAuth(`${baseUrl}/recipe/`, data, token);
+    if (response.status === 200) {
+      setIsError(false);
+      navigate("/");
+    } else if (response.status === 500) {
+      setIsError(true);
+    } else {
+      console.error(
+        "Wystąpił błąd podczas wysyłania przepisu! Spróbuj ponownie później"
+      );
+      setIsError(true);
+    }
   };
 
   return (
@@ -139,7 +106,7 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
       ></TextField>
       <div className="flex gap-5">
         <TextField
-          sx={{ minWidth: 150 }}
+          className="flex-1"
           label="Czas przygotowania (minuty)"
           type="number"
           InputProps={{ inputProps: { min: 0 } }}
@@ -166,35 +133,42 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
         ></CategorySelect>
       </div>
       <h4 className="mt-4 mb-2">Lista składników</h4>
-      {ingredients.map((ingredient) => (
+      {ingredients.fields.map((ingredient, index) => (
         <IngredientInput
           key={ingredient.id}
           units={units}
-          index={ingredient.id}
+          index={index}
           register={register}
-          unregister={unregister}
           errors={errors}
-          onRemove={() => removeIngredient(ingredient.id)}
-        />
-      ))}
-      <button type="button" className={classes.addBtn} onClick={addIngredient}>
-        Dodaj kolejny składnik
-      </button>
-      <h4>Napisz krok po kroku jak przygotować przepis </h4>
-      {preparationSteps.map((step) => (
-        <PreparationInput
-          key={step.id}
-          index={step.id}
-          register={register}
-          unregister={unregister}
-          errors={errors}
-          onRemove={() => removePreparationStep(step.id)}
+          onRemove={() => ingredients.remove(index)}
         />
       ))}
       <button
         type="button"
         className={classes.addBtn}
-        onClick={addPreparationStep}
+        onClick={() =>
+          ingredients.append(
+            { name: "", amount: 0, unit: "" },
+            { shouldFocus: false }
+          )
+        }
+      >
+        Dodaj kolejny składnik
+      </button>
+      <h4>Napisz krok po kroku jak przygotować przepis </h4>
+      {preparation.fields.map((step, index) => (
+        <PreparationInput
+          key={step.id}
+          index={index}
+          register={register}
+          errors={errors}
+          onRemove={() => preparation.remove(index)}
+        />
+      ))}
+      <button
+        type="button"
+        className={classes.addBtn}
+        onClick={() => preparation.append({ step: "" }, { shouldFocus: false })}
       >
         Dodaj kolejny krok
       </button>

@@ -16,9 +16,8 @@ export const postData = async (
   return { data: responseData, status: response.status };
 };
 
-export const postDataAuth = (target: string, data: object) => {
-  //const token = localStorage.getItem("token") albo const { token } = useAuth() do przemyślenia
-  return postData(target, data, "tokenTutaj");
+export const postDataAuth = (target: string, data: object, token: string) => {
+  return postData(target, data, token);
 };
 
 export const postDataNotAuth = (target: string, data: object) => {

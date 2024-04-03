@@ -9,34 +9,29 @@ import {
 } from "@mui/material";
 import { Unit } from "../../../utils/types";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { FormData } from "./AddRecipe";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 type IngredientInputProps = {
   units: Unit[];
-  register: any;
-  unregister: any;
-  errors: any;
-  index: string;
-  onRemove: (index: string) => void;
+  register: UseFormRegister<FormData>;
+  errors: FieldErrors<FormData>;
+  index: number;
+  onRemove: () => void;
 };
 
 const IngredientInput = ({
   units,
   index,
   register,
-  unregister,
   errors,
   onRemove,
 }: IngredientInputProps) => {
-  const handleIngredientDelete = (index: string) => {
-    onRemove(index);
-    unregister(`ingredients.${index}`);
-  };
-
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col lg:flex-row justify-center gap-5 lg:gap-3 w-full">
+      <div className="flex flex-1 flex-col lg:flex-row gap-5 lg:gap-3">
         <TextField
-          className="w-full"
+          className="flex-1"
           label="Nazwa składnika"
           InputLabelProps={{ shrink: true }}
           {...register(`ingredients.${index}.name`, {
@@ -51,13 +46,11 @@ const IngredientInput = ({
             },
           })}
           error={!!errors.ingredients?.[index]?.name}
-          helperText={
-            errors.ingredients?.[index]?.name &&
-            errors.ingredients[index]?.name.message
-          }
+          helperText={errors.ingredients?.[index]?.name?.message}
         />
-        <div className="flex gap-3 justify-between">
+        <div className="flex flex-1 gap-3">
           <TextField
+            className="flex-1"
             label="Ilość"
             type="number"
             InputProps={{ inputProps: { min: 0 } }}
@@ -74,12 +67,9 @@ const IngredientInput = ({
               },
             })}
             error={!!errors.ingredients?.[index]?.amount}
-            helperText={
-              errors.ingredients?.[index]?.amount &&
-              errors.ingredients[index]?.amount.message
-            }
+            helperText={errors.ingredients?.[index]?.amount?.message}
           />
-          <FormControl fullWidth sx={{ minWidth: 160 }}>
+          <FormControl className="flex-1">
             <InputLabel shrink error={!!errors.ingredients?.[index]?.unit}>
               Jednostka
             </InputLabel>
@@ -99,8 +89,7 @@ const IngredientInput = ({
             </Select>
             {errors.ingredients?.[index]?.unit && (
               <FormHelperText error>
-                {errors.ingredients[index]?.unit &&
-                  errors.ingredients[index]?.unit.message}
+                {errors.ingredients?.[index]?.unit?.message}
               </FormHelperText>
             )}
           </FormControl>
@@ -108,7 +97,7 @@ const IngredientInput = ({
       </div>
       <div className="m-0 md:ml-5">
         <IconButton
-          onClick={() => handleIngredientDelete(index)}
+          onClick={onRemove}
           className="hover:transition-all hover:ease-in-out hover:text-red-400 active:text-red-400"
         >
           <DeleteIcon sx={{ width: 30, height: 30 }} />

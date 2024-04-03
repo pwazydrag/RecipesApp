@@ -1,26 +1,21 @@
 import { IconButton, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { FormData } from "./AddRecipe";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 type PreparationInputProps = {
-  register: any;
-  unregister: any;
-  errors: any;
-  index: string;
-  onRemove: (index: string) => void;
+  register: UseFormRegister<FormData>;
+  errors: FieldErrors<FormData>;
+  index: number;
+  onRemove: () => void;
 };
 
 const PreparationInput = ({
   register,
-  unregister,
   errors,
   index,
   onRemove,
 }: PreparationInputProps) => {
-  const handleStepDelete = (index: string) => {
-    onRemove(index);
-    unregister(`preparation.${index}`);
-  };
-
   return (
     <div className="flex">
       <TextField
@@ -40,14 +35,11 @@ const PreparationInput = ({
           },
         })}
         error={!!errors.preparation?.[index]?.step}
-        helperText={
-          errors.preparation?.[index]?.step &&
-          errors.preparation[index]?.step.message
-        }
+        helperText={errors.preparation?.[index]?.step?.message}
       />
       <div className="m-0 md:ml-5">
         <IconButton
-          onClick={() => handleStepDelete(index)}
+          onClick={onRemove}
           className="hover:transition-all hover:ease-in-out hover:text-red-400 active:text-red-400"
         >
           <DeleteIcon sx={{ width: 30, height: 30 }} />
