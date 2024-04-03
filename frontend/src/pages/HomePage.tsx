@@ -21,9 +21,9 @@ const HomePage = () => {
     );
 
   return (
-    <div>
+    <>
       <Recipes data={data} />
-    </div>
+    </>
   );
 };
 

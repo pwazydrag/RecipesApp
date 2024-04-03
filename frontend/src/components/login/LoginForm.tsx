@@ -52,13 +52,14 @@ const LoginForm = () => {
   return (
     <>
       <form
-        className={`${classes.loginForm} w-9/12 md:w-6/12 lg:w-3/12 p-11 mt-4 mx-auto`}
+        className={`${classes.loginForm} w-9/12 md:w-6/12 lg:w-4/12 p-11 mt-4 mx-auto`}
         onSubmit={handleSubmit(onSubmit)}
       >
         <h2>Logowanie</h2>
         <div className="flex flex-col gap-12">
           <TextField
             label="Nazwa użytkownika"
+            InputLabelProps={{ shrink: true }}
             {...register("username", {
               required: "Nazwa użytkownika jest wymagana!",
               minLength: {
@@ -77,6 +78,7 @@ const LoginForm = () => {
           ></TextField>
           <TextField
             label="Hasło"
+            InputLabelProps={{ shrink: true }}
             type="password"
             {...register("password", {
               required: "Hasło jest wymagane!",

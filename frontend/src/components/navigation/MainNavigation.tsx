@@ -24,7 +24,7 @@ const MainNavigation = () => {
   };
 
   return (
-    <header className="w-full bg-gray-500 shadow-lg text-white text-xs sm:text-base">
+    <header className="w-full bg-gray-500 shadow-lg text-white text-xs md:text-base">
       <nav className="flex justify-between h-16 items-center px-8">
         <div className="flex items-center justify-center gap-3 sm:gap-16">
           <Link
@@ -51,7 +51,7 @@ const MainNavigation = () => {
           </Link>
           {token && (
             <Link
-              to="/"
+              to="/add"
               className="text-inherit no-underline hover:transition-all hover:ease-in-out hover:text-yellow-400 active:text-yellow-400"
             >
               DODAJ PRZEPIS

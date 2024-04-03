@@ -1,6 +1,6 @@
-import { Ingredient } from "../../utils/types";
+import { Ingredient } from "../../../utils/types";
 import classes from "./Ingredients.module.css";
-import { displayIngredient } from "../../utils/displayIngredients";
+import { displayIngredient } from "../../../utils/displayIngredients";
 
 type IngredientsProps = {
   ingredients: Ingredient[];

@@ -1,6 +1,6 @@
 import classes from "./Comments.module.css";
-import { Comment } from "../../utils/types";
-import { displayDate } from "../../utils/displayDate";
+import { Comment } from "../../../utils/types";
+import { displayDate } from "../../../utils/displayDate";
 
 type CommentsProps = {
   comments: Comment[];

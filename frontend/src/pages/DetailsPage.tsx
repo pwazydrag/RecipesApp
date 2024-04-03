@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import useFetchRecipe from "../hooks/useFetchRecipe";
-import RecipeDetails from "../components/recipe/RecipeDetails";
+import RecipeDetails from "../components/recipe/details/RecipeDetails";
 import { CircularProgress } from "@mui/material";
 
 const DetailsPage = () => {
@@ -26,9 +26,9 @@ const DetailsPage = () => {
     );
 
   return (
-    <div>
+    <>
       <RecipeDetails recipe={data} />
-    </div>
+    </>
   );
 };
 

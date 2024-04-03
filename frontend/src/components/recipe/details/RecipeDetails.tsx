@@ -1,6 +1,6 @@
 import classes from "./RecipeDetails.module.css";
-import { calculateAverage } from "../../utils/calculateAverage";
-import { Recipe } from "../../utils/types";
+import { calculateAverage } from "../../../utils/calculateAverage";
+import { Recipe } from "../../../utils/types";
 import Comments from "./Comments";
 import Preparation from "./Preparation";
 import RateRecipe from "./RateRecipe";

@@ -1,6 +1,6 @@
 import Rating from "@mui/material/Rating";
 import classes from "./RecipeGeneralInfo.module.css";
-import { Author, Category } from "../../utils/types";
+import { Author, Category } from "../../../utils/types";
 import jablecznik from "./jablecznik.jpg";
 
 type RecipeGeneralInfoProps = {

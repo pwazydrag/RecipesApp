@@ -65,6 +65,7 @@ const RegistrationForm = () => {
         <div className="flex flex-col gap-12">
           <TextField
             label="Nazwa użytkownika"
+            InputLabelProps={{ shrink: true }}
             {...register("username", {
               required: "Nazwa użytkownika jest wymagana!",
               minLength: {
@@ -83,6 +84,7 @@ const RegistrationForm = () => {
           ></TextField>
           <TextField
             label="Adres email"
+            InputLabelProps={{ shrink: true }}
             type="email"
             {...register("email", {
               required: "Adres email jest wymagany!",
@@ -103,6 +105,7 @@ const RegistrationForm = () => {
           ></TextField>
           <TextField
             label="Hasło"
+            InputLabelProps={{ shrink: true }}
             type="password"
             {...register("password", {
               required: "Hasło jest wymagane!",
@@ -121,6 +124,7 @@ const RegistrationForm = () => {
           ></TextField>
           <TextField
             label="Powtórz hasło"
+            InputLabelProps={{ shrink: true }}
             type="password"
             {...register("repeatPassword", {
               required: "Powtórzenie hasła jest wymagane!",

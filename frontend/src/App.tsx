@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import RootLayout from "./pages/Root";
 import DetailsPage from "./pages/DetailsPage";
 import { AuthProvider } from "./hooks/useAuth";
+import AddPage from "./pages/AddPage";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
       { path: "/register", element: <RegisterPage /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/details/:id", element: <DetailsPage /> },
+      { path: "/add", element: <AddPage /> },
     ],
   },
 ]);
