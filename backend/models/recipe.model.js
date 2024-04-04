@@ -53,7 +53,10 @@ const RecipeSchema = mongoose.Schema({
       ref: "Like",
     },
   ],
-  //zdjecie
+  img: {
+    type: String,
+    required: true,
+  },
 });
 
 const Recipe = mongoose.model("Recipe", RecipeSchema);

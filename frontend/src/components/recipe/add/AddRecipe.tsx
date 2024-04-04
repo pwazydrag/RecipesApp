@@ -65,7 +65,7 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
 
   const onSubmit = async (data: FormData) => {
     console.log(data);
-    const response = await postDataAuth(`${baseUrl}/recipe/`, data, token);
+    const response = await postDataAuth(`${baseUrl}/recipes`, data, token);
     if (response.status === 200) {
       setIsError(false);
       navigate("/");
