@@ -3,7 +3,6 @@ import { calculateAverage } from "../../../utils/calculateAverage";
 import { Recipe } from "../../../utils/types";
 import Comments from "./Comments";
 import Preparation from "./Preparation";
-import RateRecipe from "./RateRecipe";
 import Ingredients from "./Ingredients";
 import RecipeGeneralInfo from "./RecipeGeneralInfo";
 import Actions from "./Actions";
@@ -25,11 +24,11 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
         preparationTime={recipe.preparationTime}
         date={recipe.date}
         averageRating={averageRating}
+        img={recipe.img}
       ></RecipeGeneralInfo>
       <Actions></Actions>
       <Ingredients ingredients={recipe.ingredients}></Ingredients>
       <Preparation preparation={recipe.preparation}></Preparation>
-      <RateRecipe></RateRecipe>
       <Comments comments={recipe.comments}></Comments>
     </div>
   );

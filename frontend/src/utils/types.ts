@@ -9,6 +9,7 @@ export type Recipe = {
   preparation: string[];
   rating: Rating[];
   comments: Comment[];
+  img: string;
 };
 
 export type Author = {

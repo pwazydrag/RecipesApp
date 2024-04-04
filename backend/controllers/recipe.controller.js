@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const { verifyToken } = require("../functions/authMiddleware");
 const recipe = require("../models/recipe.model");
 const comment = require("../models/comment.model");

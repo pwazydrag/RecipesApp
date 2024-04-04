@@ -64,7 +64,6 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
   const [isError, setIsError] = useState(false);
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
     const response = await postDataAuth(`${baseUrl}/recipes`, data, token);
     if (response.status === 200) {
       setIsError(false);
@@ -190,6 +189,9 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
         error={!!errors.img}
         helperText={errors.img?.message}
       ></TextField>
+      {isError && (
+        <p className="text-red-500">Coś poszło nie tak! Spróbuj ponownie</p>
+      )}
       <button type="submit" className={`${classes.submitBtn} mt-3`}>
         Dodaj przepis
       </button>

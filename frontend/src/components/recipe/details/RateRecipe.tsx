@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
 
-import classes from "./RateRecipe.module.css";
 import Rating from "@mui/material/Rating";
 
 const RateRecipe = () => {
@@ -18,8 +17,8 @@ const RateRecipe = () => {
   }, [userStarRating]);
 
   return (
-    <div>
-      <h3>Oceń ten ten przepis!</h3>
+    <div className="mt-16 md:mt-0 bg-[#f4e8e8fe] rounded-3xl border border-gray-300 p-7 shadow-md w-[12rem]">
+      <h3>Oceń przepis!</h3>
       <Rating
         name="userRating"
         value={userStarRating}
