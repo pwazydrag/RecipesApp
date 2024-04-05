@@ -68,13 +68,12 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
     if (response.status === 200) {
       setIsError(false);
       navigate("/");
-    } else if (response.status === 500) {
+    } else if (response.status === 401) {
       setIsError(true);
     } else {
       console.error(
         "Wystąpił błąd podczas wysyłania przepisu! Spróbuj ponownie później"
       );
-      setIsError(true);
     }
   };
 

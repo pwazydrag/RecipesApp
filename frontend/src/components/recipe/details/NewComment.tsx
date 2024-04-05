@@ -33,21 +33,19 @@ const NewComment = ({ hasComments }: newCommentProps) => {
 
   const onSubmit = async (data: FormData) => {
     const recipeId = id ? id : "";
-    console.log(recipeId);
     data = {
       ...data,
       recipeId: recipeId,
     };
-    const response = await postDataAuth(`${baseUrl}/comments/add`, data, token);
+    const response = await postDataAuth(`${baseUrl}/comments/`, data, token);
     if (response.status === 200) {
       setIsError(false);
-    } else if (response.status === 500) {
+    } else if (response.status === 401) {
       setIsError(true);
     } else {
       console.error(
         "Wystąpił błąd podczas dodawania komentarza! Spróbuj ponownie później"
       );
-      setIsError(true);
     }
   };
 

@@ -8,6 +8,7 @@ const userRoute = require("./routes/user.route");
 const categoryRoute = require("./routes/category.route");
 const unitRoute = require("./routes/unit.route");
 const commentRoute = require("./routes/comment.route");
+const rateRoute = require("./routes/rate.route");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ app.use("/api/users", userRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/units", unitRoute);
 app.use("/api/comments", commentRoute);
+app.use("/api/rates", rateRoute);
 
 // Main Route
 app.get("/", (req, res) => {
