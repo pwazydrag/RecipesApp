@@ -2,6 +2,15 @@ const { verifyToken } = require("../functions/authMiddleware");
 const comment = require("../models/comment.model");
 const recipe = require("../models/recipe.model");
 
+const getComments = async (req, res) => {
+  try {
+    const comments = await comment.find({}).populate("author", "username");
+    res.status(200).json(comments);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const addComment = async (req, res) => {
   try {
     verifyToken(req, res, async () => {
@@ -32,4 +41,5 @@ const addComment = async (req, res) => {
 
 module.exports = {
   addComment,
+  getComments,
 };

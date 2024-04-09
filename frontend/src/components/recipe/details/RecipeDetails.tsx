@@ -29,7 +29,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
       <Actions></Actions>
       <Ingredients ingredients={recipe.ingredients}></Ingredients>
       <Preparation preparation={recipe.preparation}></Preparation>
-      <Comments comments={recipe.comments}></Comments>
+      <Comments recipeId={recipe._id}></Comments>
     </div>
   );
 };

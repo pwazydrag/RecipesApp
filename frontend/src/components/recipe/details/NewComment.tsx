@@ -14,9 +14,10 @@ type FormData = {
 
 type newCommentProps = {
   hasComments: boolean;
+  refetchData: () => void;
 };
 
-const NewComment = ({ hasComments }: newCommentProps) => {
+const NewComment = ({ hasComments, refetchData }: newCommentProps) => {
   const { token } = useAuth();
   const { id } = useParams();
   const [isError, setIsError] = useState(false);
@@ -24,6 +25,7 @@ const NewComment = ({ hasComments }: newCommentProps) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>({
     defaultValues: {
       comment: "",
@@ -40,6 +42,8 @@ const NewComment = ({ hasComments }: newCommentProps) => {
     const response = await postDataAuth(`${baseUrl}/comments/`, data, token);
     if (response.status === 200) {
       setIsError(false);
+      refetchData();
+      reset();
     } else if (response.status === 401) {
       setIsError(true);
     } else {

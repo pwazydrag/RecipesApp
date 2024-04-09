@@ -1,19 +1,40 @@
 import { Comment } from "../../../utils/types";
 import { displayDate } from "../../../utils/displayDate";
 import NewComment from "./NewComment";
+import useFetchComments from "../../../hooks/useFetchComments";
+import { CircularProgress } from "@mui/material";
 
 type CommentsProps = {
-  comments: Comment[];
+  recipeId: string;
 };
 
-const Comments = ({ comments }: CommentsProps) => {
-  const hasComments = comments.length > 0 ? true : false;
+const Comments = ({ recipeId }: CommentsProps) => {
+  const { data, isError, isLoading, refetchData } = useFetchComments({
+    id: recipeId,
+  });
+
+  if (isLoading)
+    return (
+      <div className="flex flex-col justify-center items-center h-screen">
+        <CircularProgress />
+        <p>Ładujemy komentarze...</p>
+      </div>
+    );
+
+  if (isError || !data)
+    return (
+      <div className="flex flex-col justify-center items-center h-screen">
+        <p>Coś nie tak z komentarzami - przepraszamy!</p>
+      </div>
+    );
+
+  const hasComments = data.length > 0 ? true : false;
 
   return (
     <div className="text-left">
       <div>
         {hasComments && <h3>Komentarze:</h3>}
-        {comments.map((commentSingle: Comment) => (
+        {data.map((commentSingle: Comment) => (
           <div
             key={commentSingle._id}
             className="bg-white rounded-2xl border border-solid border-red-300 shadow-md px-5 mt-5"
@@ -28,7 +49,7 @@ const Comments = ({ comments }: CommentsProps) => {
           </div>
         ))}
       </div>
-      <NewComment hasComments={hasComments} />
+      <NewComment hasComments={hasComments} refetchData={refetchData} />
     </div>
   );
 };

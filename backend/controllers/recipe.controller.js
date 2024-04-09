@@ -21,10 +21,6 @@ const getRecipe = async (req, res) => {
     const { id } = req.params;
     const recipeOne = await recipe
       .findById(id)
-      .populate({
-        path: "comments",
-        populate: { path: "author", select: "username" },
-      })
       .populate("author", "username")
       .populate("category")
       .populate("rating", "user value")
