@@ -4,7 +4,17 @@ const recipe = require("../models/recipe.model");
 
 const getComments = async (req, res) => {
   try {
-    const comments = await comment.find({}).populate("author", "username");
+    const { id } = req.params;
+    const recipeOne = await recipe.findById(id);
+
+    if (!recipeOne) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    const commentIds = recipeOne.comments;
+    const comments = await comment
+      .find({ _id: { $in: commentIds } })
+      .populate("author", "username");
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({ message: error.message });

@@ -39,7 +39,11 @@ const NewComment = ({ hasComments, refetchData }: newCommentProps) => {
       ...data,
       recipeId: recipeId,
     };
-    const response = await postDataAuth(`${baseUrl}/comments/`, data, token);
+    const response = await postDataAuth(
+      `${baseUrl}/recipes/comments/`,
+      data,
+      token
+    );
     if (response.status === 200) {
       setIsError(false);
       refetchData();

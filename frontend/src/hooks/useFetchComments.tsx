@@ -18,7 +18,7 @@ const useFetchComments = ({ id }: useFetchCommentsProps) => {
   };
 
   useEffect(() => {
-    fetchData(`${baseUrl}/comments/${id}`)
+    fetchData(`${baseUrl}/recipes/comments/${id}`)
       .then((fetchedData) => {
         setData(fetchedData);
         setIsLoading(false);
