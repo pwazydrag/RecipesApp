@@ -131,10 +131,71 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
+const searchRecipes = async (req, res) => {
+  try {
+    const { data } = req.body;
+
+    const searchIngredients = data.ingredients
+      .map((ingredient) => ingredient.name)
+      .filter((name) => name.trim().length > 0);
+
+    const allFieldsEmpty =
+      data.title === "" &&
+      data.category === "" &&
+      data.minTime === 0 &&
+      data.maxTime === 0 &&
+      searchIngredients.length === 0;
+
+    if (allFieldsEmpty || data.minTime > data.maxTime) {
+      return res.status(200).json([]);
+    }
+
+    let categoryId;
+    if (data.category) {
+      const categoryOne = await category.findOne({ name: data.category });
+      if (categoryOne) {
+        categoryId = categoryOne._id;
+      }
+    }
+    const query = {};
+    if (data.title !== "") {
+      query.title = { $regex: data.title, $options: "i" };
+    }
+
+    if (data.minTime || data.maxTime) {
+      query.preparationTime = {};
+      if (data.minTime) query.preparationTime.$gte = data.minTime;
+      if (data.maxTime) query.preparationTime.$lte = data.maxTime;
+    }
+
+    if (categoryId) {
+      query.category = categoryId;
+    }
+
+    const recipes = await recipe
+      .find(query)
+      .populate("category")
+      .populate("ingredients");
+
+    const filteredRecipes = recipes.filter((recipe) =>
+      searchIngredients.every((searchIngredient) =>
+        recipe.ingredients.some((ingredient) =>
+          new RegExp(searchIngredient, "i").test(ingredient.name)
+        )
+      )
+    );
+
+    res.status(200).json(filteredRecipes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getRecipes,
   getRecipe,
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  searchRecipes,
 };

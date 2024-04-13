@@ -101,7 +101,7 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
         })}
         error={!!errors.title}
         helperText={errors.title?.message}
-      ></TextField>
+      />
       <div className="flex gap-5">
         <TextField
           className="flex-1"
@@ -128,7 +128,7 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
           categories={categories}
           register={register}
           errors={errors}
-        ></CategorySelect>
+        />
       </div>
       <h4 className="mt-4 mb-2">Lista składników</h4>
       {ingredients.fields.map((ingredient, index) => (
@@ -187,7 +187,7 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
         })}
         error={!!errors.img}
         helperText={errors.img?.message}
-      ></TextField>
+      />
       {isError && (
         <p className="text-red-500">Coś poszło nie tak! Spróbuj ponownie</p>
       )}

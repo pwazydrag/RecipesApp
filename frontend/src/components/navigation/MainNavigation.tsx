@@ -44,7 +44,7 @@ const MainNavigation = () => {
             PRZEPISY
           </Link>
           <Link
-            to="/"
+            to="/search"
             className="text-inherit no-underline hover:transition-all hover:ease-in-out hover:text-yellow-400 active:text-yellow-400"
           >
             WYSZUKAJ
@@ -104,32 +104,6 @@ const MainNavigation = () => {
       </nav>
     </header>
   );
-  // return (
-  //   <header className={classes.header}>
-  //     <nav>
-  //       <ul className={classes.list}>
-  //         <li>
-  //           <Link to="/">Strona główna</Link>
-  //         </li>
-  //         {!token && (
-  //           <li>
-  //             <Link to="/register">Rejestracja</Link>
-  //           </li>
-  //         )}
-  //         {!token && (
-  //           <li>
-  //             <Link to="/login">Logowanie</Link>
-  //           </li>
-  //         )}
-  //         {token && (
-  //           <li>
-  //             <a onClick={handleLogout}>Wyloguj</a>
-  //           </li>
-  //         )}
-  //       </ul>
-  //     </nav>
-  //   </header>
-  // );
 };
 
 export default MainNavigation;

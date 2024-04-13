@@ -1,0 +1,31 @@
+.addBtn {
+  align-self: flex-end;
+  background-color: #a19b98;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addBtn:hover {
+  background-color: #80c5ed;
+}
+
+.submitBtn {
+  align-self: center;
+  background-color: #f2580a;
+  color: white;
+  padding: 20px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submitBtn:hover {
+  background-color: #2e8b57;
+}

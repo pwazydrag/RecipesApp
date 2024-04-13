@@ -7,6 +7,7 @@ const {
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  searchRecipes,
 } = require("../controllers/recipe.controller");
 const Comment = require("../models/comment.model");
 const {
@@ -28,6 +29,7 @@ router.get("/favorites/:user/:id", getFavorite);
 router.get("/rates/:user/:id", getRate);
 
 router.post("/", createRecipe);
+router.post("/search", searchRecipes);
 router.post("/comments", addComment);
 router.post("/favorites", changeFavorite);
 router.post("/rates", addRate);
