@@ -50,7 +50,7 @@ const getFavorite = async (req, res) => {
     });
 
     if (favoriteOne) {
-      return res.status(200).json(favoriteOne);
+      return res.status(200).json("exist");
     } else {
       return res.status(204).send();
     }

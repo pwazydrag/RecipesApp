@@ -17,7 +17,7 @@ const Favorite = () => {
       id &&
       fetchData(`${baseUrl}/recipes/favorites/${token}/${id}`).then(
         (fetchedData) => {
-          fetchedData?.user === token && setIsFavorite(true);
+          if (fetchedData === "exist") setIsFavorite(true);
         }
       );
   }, [token]);
