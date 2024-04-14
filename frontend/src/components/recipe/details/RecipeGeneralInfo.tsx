@@ -57,13 +57,13 @@ const RecipeGeneralInfo = ({
         </div>
       </div>
       <br />
-      <div className="aspect-w-1 aspect-h-1 overflow-hidden">
+      <figure className="aspect-w-1 aspect-h-1 overflow-hidden">
         <img
           src={img}
           alt="Zdjęcie przepisu"
-          className="w-[60vw] mt-6 mb-3 object-cover object-center rounded-2xl border border-solid border-red-300 shadow-md"
+          className="w-[80%] lg:w-[60%] mt-6 mb-3 object-cover object-center rounded-2xl border border-solid border-red-300 shadow-md"
         />
-      </div>
+      </figure>
     </div>
   );
 };

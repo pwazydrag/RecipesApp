@@ -9,7 +9,7 @@ const Preparation = ({ preparation }: PreparationProps) => {
       <ol className="list-none">
         {preparation.map((prepStep, index) => (
           <li key={index} className="ml-[-1.5rem] mt-5">
-            <span className="font-medium">Krok {index + 1}:</span> {prepStep}`
+            <span className="font-medium">Krok {index + 1}:</span> {prepStep}
           </li>
         ))}
       </ol>

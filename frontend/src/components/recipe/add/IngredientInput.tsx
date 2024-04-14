@@ -37,8 +37,8 @@ const IngredientInput = ({
           {...register(`ingredients.${index}.name`, {
             required: "Podaj nazwę lub usuń!",
             minLength: {
-              value: 6,
-              message: "Musi mieć przynajmniej 6 znaków!",
+              value: 3,
+              message: "Musi mieć przynajmniej 3 znaków!",
             },
             maxLength: {
               value: 40,
@@ -58,7 +58,7 @@ const IngredientInput = ({
             {...register(`ingredients.${index}.amount`, {
               required: "Wpisz liczbę!",
               min: {
-                value: 1,
+                value: 0.1,
                 message: "Ilość musi być większa od 0!",
               },
               max: {

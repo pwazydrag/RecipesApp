@@ -9,7 +9,7 @@ const unit = require("../models/unit.model");
 
 const getRecipes = async (req, res) => {
   try {
-    const recipes = await recipe.find({});
+    const recipes = await recipe.find({}).populate("rating", "value");
     res.status(200).json(recipes);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -146,7 +146,10 @@ const searchRecipes = async (req, res) => {
       data.maxTime === 0 &&
       searchIngredients.length === 0;
 
-    if (allFieldsEmpty || data.minTime > data.maxTime) {
+    const minTime = parseInt(data.minTime, 10);
+    const maxTime = parseInt(data.maxTime, 10);
+
+    if (allFieldsEmpty || minTime > maxTime) {
       return res.status(200).json([]);
     }
 
@@ -162,10 +165,10 @@ const searchRecipes = async (req, res) => {
       query.title = { $regex: data.title, $options: "i" };
     }
 
-    if (data.minTime || data.maxTime) {
+    if (minTime || maxTime) {
       query.preparationTime = {};
-      if (data.minTime) query.preparationTime.$gte = data.minTime;
-      if (data.maxTime) query.preparationTime.$lte = data.maxTime;
+      if (minTime) query.preparationTime.$gte = minTime;
+      if (maxTime) query.preparationTime.$lte = maxTime;
     }
 
     if (categoryId) {

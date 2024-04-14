@@ -1,3 +1,9 @@
+.searchForm {
+  background-color: #f2f2f2;
+  border: 3px solid rgb(252, 72, 1);
+  border-radius: 13px;
+}
+
 .addBtn {
   align-self: flex-end;
   background-color: #a19b98;

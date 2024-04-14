@@ -30,8 +30,8 @@ const PreparationInput = ({
             message: "Musi mieć przynajmniej 6 znaków!",
           },
           maxLength: {
-            value: 100,
-            message: "Nie może mieć więcej niż 100 znaków!",
+            value: 200,
+            message: "Nie może mieć więcej niż 200 znaków!",
           },
         })}
         error={!!errors.preparation?.[index]?.step}

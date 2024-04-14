@@ -27,7 +27,6 @@ const SearchRecipe = ({ categories }: SearchRecipeProps) => {
     handleSubmit,
     formState: { errors },
     control,
-    getValues,
   } = useForm<FormData>({
     defaultValues: {
       title: "",
@@ -64,7 +63,7 @@ const SearchRecipe = ({ categories }: SearchRecipeProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col w-8/12 md:w-9/12 lg:w-7/12 p-11 mt-4 mx-auto"
+      className={`${classes.searchForm} flex flex-col w-8/12 md:w-9/12 lg:w-7/12 p-11 mt-4 mx-auto`}
     >
       <NameSearch register={register} />
       <CategorySearch categories={categories} register={register} />
