@@ -1,4 +1,6 @@
-const calculateAverage = (arr: number[]) => {
+import { Rating } from "./types";
+
+export const calculateAverage = (arr: number[]): number => {
   if (!arr || arr.length === 0) {
     return 0;
   }
@@ -10,4 +12,7 @@ const calculateAverage = (arr: number[]) => {
   return sum / arr.length;
 };
 
-export { calculateAverage };
+export const calculateAverageRating = (ratings: Rating[]): number => {
+  const values = ratings.map((rating) => rating.value);
+  return calculateAverage(values);
+};

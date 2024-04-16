@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import Recipes from "../components/home/Recipes";
+import Recipes from "../components/home/Home";
 import useFetchRecipes from "../hooks/useFetchRecipes";
 
 const HomePage = () => {

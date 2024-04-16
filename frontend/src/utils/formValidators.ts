@@ -1,4 +1,4 @@
-const isEmailValid = (email: string): boolean => {
+export const isEmailValid = (email: string): boolean => {
   const atPos = email.indexOf("@");
   const dotPos = email.lastIndexOf(".");
   return (
@@ -9,8 +9,9 @@ const isEmailValid = (email: string): boolean => {
   );
 };
 
-const arePasswordsCorrect = (password: string, repeatPassword: string) => {
+export const arePasswordsCorrect = (
+  password: string,
+  repeatPassword: string
+) => {
   return password === repeatPassword;
 };
-
-export { isEmailValid, arePasswordsCorrect };
