@@ -32,7 +32,7 @@ const BestRecipes = ({ data }: BestRecipesProps) => {
             recipeId={recipe._id}
             title={recipe.title}
             img={recipe.img}
-            userRating={recipe.rating.map((rating) => rating.value)}
+            userRating={calculateAverageRating(recipe.rating)}
           />
         ))}
       </div>

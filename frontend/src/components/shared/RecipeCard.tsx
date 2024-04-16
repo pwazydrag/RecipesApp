@@ -1,17 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { Rating } from "@mui/material";
-import { calculateAverage } from "../../utils/calculateAverage";
 
 type RecipeCardProps = {
   recipeId: string;
   title: string;
   img: string;
-  userRating: number[];
+  userRating: number;
 };
 
 const RecipeCard = ({ recipeId, title, img, userRating }: RecipeCardProps) => {
   const navigate = useNavigate();
-  const averageRating = calculateAverage(userRating);
 
   const navigateToRecipe = () => {
     navigate(`details/${recipeId}`);
@@ -33,7 +31,7 @@ const RecipeCard = ({ recipeId, title, img, userRating }: RecipeCardProps) => {
         <h4 className="text-center">{title}</h4>
         <Rating
           name="half-rating-read"
-          value={averageRating}
+          value={userRating}
           precision={0.5}
           readOnly
         ></Rating>

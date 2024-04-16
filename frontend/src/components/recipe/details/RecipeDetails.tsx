@@ -1,5 +1,5 @@
 import classes from "./RecipeDetails.module.css";
-import { calculateAverage } from "../../../utils/calculateAverage";
+import { calculateAverageRating } from "../../../utils/calculateAverage";
 import { Recipe } from "../../../utils/types";
 import Comments from "./Comments";
 import Preparation from "./Preparation";
@@ -12,9 +12,6 @@ type RecipeDetailsProps = {
 };
 
 const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
-  const ratingValues = recipe.rating.map((rating) => rating.value);
-  const averageRating = calculateAverage(ratingValues);
-
   return (
     <div className={classes.recipeDetails}>
       <RecipeGeneralInfo
@@ -23,7 +20,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
         category={recipe.category}
         preparationTime={recipe.preparationTime}
         date={recipe.date}
-        averageRating={averageRating}
+        averageRating={calculateAverageRating(recipe.rating)}
         img={recipe.img}
       ></RecipeGeneralInfo>
       <Actions></Actions>
