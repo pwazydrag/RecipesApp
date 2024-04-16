@@ -8,6 +8,7 @@ const usePaginate = (itemsPerPage: number) => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   return {
     currentPage,
+    itemsPerPage,
     indexOfFirstItem,
     indexOfLastItem,
     paginate,

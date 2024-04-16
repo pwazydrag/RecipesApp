@@ -24,7 +24,7 @@ const BestRecipes = ({ data }: BestRecipesProps) => {
 
   return (
     <div className="mt-16">
-      <h2 className="text-center mt-12 mb-12">Najwyżej oceniane przepisy</h2>
+      <h2 className="text-center my-12">Najwyżej oceniane przepisy</h2>
       <div className="flex flex-wrap justify-around gap-12">
         {currentRecipes.map((recipe) => (
           <RecipeCard

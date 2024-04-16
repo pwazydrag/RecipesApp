@@ -12,7 +12,7 @@ const RecipeCard = ({ recipeId, title, img, userRating }: RecipeCardProps) => {
   const navigate = useNavigate();
 
   const navigateToRecipe = () => {
-    navigate(`details/${recipeId}`);
+    navigate(`/details/${recipeId}`);
   };
 
   return (

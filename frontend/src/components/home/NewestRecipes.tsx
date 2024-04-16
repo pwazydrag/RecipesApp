@@ -15,7 +15,7 @@ const NewestRecipes = ({ data }: NewestRecipesProps) => {
 
   return (
     <div>
-      <h2 className="text-center mt-12 mb-12">Najnowsze przepisy</h2>
+      <h2 className="text-center my-12">Najnowsze przepisy</h2>
       <div className="flex flex-wrap justify-around gap-12">
         {currentRecipes.map((recipe) => (
           <RecipeCard

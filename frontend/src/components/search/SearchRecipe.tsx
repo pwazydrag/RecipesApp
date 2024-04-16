@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { Category } from "../../utils/types";
+import { Category, Recipe } from "../../utils/types";
 import NameSearch from "./TitleSearch";
 import CategorySearch from "./CategorySearch";
 import PreparationTimeSearch from "./PreparationTimeSearch";
@@ -8,6 +8,7 @@ import IngredientSearch from "./IngredientSearch";
 import { baseUrl } from "../../utils/constant";
 import { postDataNotAuth } from "../../utils/postData";
 import classes from "./SearchRecipe.module.css";
+import SearchResult from "./SearchResult";
 
 export type FormData = {
   title: string;
@@ -37,30 +38,34 @@ const SearchRecipe = ({ categories }: SearchRecipeProps) => {
     },
     mode: "onBlur",
   });
-  const [isError, setIsError] = useState(false);
-
   const ingredients = useFieldArray({
     control,
     name: "ingredients",
   });
+
+  const [isError, setIsError] = useState(false);
+  const [searchResult, setSearchResult] = useState<Recipe[] | null>(null);
+  const hideSearchResult = () => {
+    setSearchResult(null);
+  };
 
   const onSubmit = async (data: FormData) => {
     const response = await postDataNotAuth(`${baseUrl}/recipes/search`, data);
     if (response.status === 200) {
       if (response.data.length > 0) {
         setIsError(false);
-        //wyniki wyszukiwania
+        setSearchResult(response.data);
       } else {
         setIsError(true);
       }
     } else {
       console.error(
-        "Wystąpił błąd podczas wysyłania przepisu! Spróbuj ponownie później"
+        "Wystąpił błąd podczas wyszukiwania przepisów! Spróbuj ponownie później"
       );
     }
   };
 
-  return (
+  return !searchResult ? (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className={`${classes.searchForm} flex flex-col w-8/12 md:w-9/12 lg:w-7/12 p-11 mt-4 mx-auto`}
@@ -95,6 +100,8 @@ const SearchRecipe = ({ categories }: SearchRecipeProps) => {
         Wyszukaj przepisy
       </button>
     </form>
+  ) : (
+    <SearchResult recipes={searchResult} hideResults={hideSearchResult} />
   );
 };
 
