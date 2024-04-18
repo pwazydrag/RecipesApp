@@ -1,26 +1,32 @@
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { Category } from "../../utils/types";
-import { UseFormRegister } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 import { FormData } from "./SearchRecipe";
 
 type CategorySearchProps = {
   categories: Category[];
-  register: UseFormRegister<FormData>;
+  control: Control<FormData>;
 };
 
-const CategorySearch = ({ categories, register }: CategorySearchProps) => {
+const CategorySearch = ({ categories, control }: CategorySearchProps) => {
   return (
     <div className="flex flex-col gap-4">
       <h3>Szukaj po kategorii</h3>
       <FormControl fullWidth>
         <InputLabel shrink>Kategoria</InputLabel>
-        <Select {...register("category")} label="Kategoria" notched>
-          {categories.map((category) => (
-            <MenuItem value={category.name} key={category._id}>
-              {category.name}
-            </MenuItem>
-          ))}
-        </Select>
+        <Controller
+          control={control}
+          name="category"
+          render={({ field }) => (
+            <Select {...field} label="Kategoria" notched>
+              {categories.map((category) => (
+                <MenuItem value={category.name} key={category._id}>
+                  {category.name}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        />
       </FormControl>
     </div>
   );

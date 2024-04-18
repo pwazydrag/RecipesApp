@@ -42,9 +42,10 @@ const addRate = async (req, res) => {
 
 const getRate = async (req, res) => {
   try {
-    const { user, id } = req.params;
+    const { id } = req.params;
+    const { token } = req.query;
 
-    const decodedToken = jwt.verify(user, process.env.JWTPRIVATEKEY);
+    const decodedToken = jwt.verify(token, process.env.JWTPRIVATEKEY);
     const userId = decodedToken._id;
 
     const rateOne = await rate.findOne({

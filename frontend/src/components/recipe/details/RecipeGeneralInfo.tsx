@@ -1,6 +1,7 @@
 import Rating from "@mui/material/Rating";
 import { Author, Category } from "../../../utils/types";
 import { displayDate } from "../../../utils/displayDate";
+import { useNavigate } from "react-router-dom";
 
 type RecipeGeneralInfoProps = {
   title: string;
@@ -21,6 +22,11 @@ const RecipeGeneralInfo = ({
   averageRating,
   img,
 }: RecipeGeneralInfoProps) => {
+  const navigate = useNavigate();
+  const navigateToAuthorProfile = () => {
+    navigate(`/profile/${author._id}`);
+  };
+
   return (
     <div className="flex flex-col">
       <div>
@@ -36,7 +42,10 @@ const RecipeGeneralInfo = ({
       <br />
       <div className="flex flex-col 2xl:flex-row text-xs md:text-base justify-center mt-2 gap-10 lg:gap-10">
         <div className="flex justify-between gap-10">
-          <div className="lg:flex-1 bg-white rounded-3xl border border-gray-300 px-5 shadow-md w-[6rem] lg:w-[10rem]">
+          <div
+            onClick={navigateToAuthorProfile}
+            className="lg:flex-1 bg-white rounded-3xl border border-gray-300 px-5 shadow-md w-[6rem] lg:w-[10rem] hover:bg-yellow-200 hover:cursor-pointer"
+          >
             <h4>Autor</h4>
             <p>{author.username}</p>
           </div>

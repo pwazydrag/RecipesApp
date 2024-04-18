@@ -19,8 +19,14 @@ const MainNavigation = () => {
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const navigateToProfile = () => {
+    handleClose();
+    navigate("/profile");
   };
 
   return (
@@ -95,7 +101,7 @@ const MainNavigation = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Mój profil</MenuItem>
+                <MenuItem onClick={navigateToProfile}>Mój profil</MenuItem>
                 <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
               </Menu>
             </div>

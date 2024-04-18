@@ -27,14 +27,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.removeItem("token");
   };
 
-  const value = useMemo(
-    () => ({
-      token,
-      login,
-      logout,
-    }),
-    [token]
-  );
+  const value = {
+    token,
+    login,
+    logout,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

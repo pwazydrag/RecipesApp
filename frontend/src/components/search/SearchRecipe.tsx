@@ -7,8 +7,8 @@ import PreparationTimeSearch from "./PreparationTimeSearch";
 import IngredientSearch from "./IngredientSearch";
 import { baseUrl } from "../../utils/constant";
 import { postDataNotAuth } from "../../utils/postData";
-import classes from "./SearchRecipe.module.css";
 import SearchResult from "./SearchResult";
+import classes from "./SearchRecipe.module.css";
 
 export type FormData = {
   title: string;
@@ -71,7 +71,7 @@ const SearchRecipe = ({ categories }: SearchRecipeProps) => {
       className={`${classes.searchForm} flex flex-col w-8/12 md:w-9/12 lg:w-7/12 p-11 mt-4 mx-auto`}
     >
       <NameSearch register={register} />
-      <CategorySearch categories={categories} register={register} />
+      <CategorySearch categories={categories} control={control} />
       <PreparationTimeSearch register={register} errors={errors} />
       <h3>Wyszukaj po składnikach</h3>
       <div className="flex flex-col gap-12 mt-4">

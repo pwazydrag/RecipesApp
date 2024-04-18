@@ -7,12 +7,12 @@ import RootLayout from "./pages/Root";
 import DetailsPage from "./pages/DetailsPage";
 import AddPage from "./pages/AddPage";
 import SearchPage from "./pages/SearchPage";
+import ProfilePage from "./pages/ProfilePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    //errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/register", element: <RegisterPage /> },
@@ -20,6 +20,8 @@ const router = createBrowserRouter([
       { path: "/details/:id", element: <DetailsPage /> },
       { path: "/add", element: <AddPage /> },
       { path: "/search", element: <SearchPage /> },
+      { path: "/profile", element: <ProfilePage /> },
+      { path: "/profile/:id", element: <ProfilePage /> },
     ],
   },
 ]);

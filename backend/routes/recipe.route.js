@@ -25,8 +25,8 @@ const { addRate, getRate } = require("../controllers/rate.controller");
 router.get("/", getRecipes);
 router.get("/:id", getRecipe);
 router.get("/comments/:id", getComments);
-router.get("/favorites/:user/:id", getFavorite);
-router.get("/rates/:user/:id", getRate);
+router.get("/favorites/:id", getFavorite);
+router.get("/rates/:id", getRate);
 
 router.post("/", createRecipe);
 router.post("/search", searchRecipes);

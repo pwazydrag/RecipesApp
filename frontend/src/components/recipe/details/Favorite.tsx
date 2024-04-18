@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
-import classes from "./Favorite.module.css";
 import { baseUrl } from "../../../utils/constant";
 import { postDataAuth } from "../../../utils/postData";
 import { fetchData } from "../../../utils/fetchData";
+import classes from "./Favorite.module.css";
 
 const Favorite = () => {
   const { token } = useAuth();
@@ -15,10 +15,8 @@ const Favorite = () => {
   useEffect(() => {
     token &&
       id &&
-      fetchData(`${baseUrl}/recipes/favorites/${token}/${id}`).then(
-        (fetchedData) => {
-          if (fetchedData === "exist") setIsFavorite(true);
-        }
+      fetchData(`${baseUrl}/recipes/favorites/${id}?token=${token}`).then(
+        (fetchedData) => fetchedData === "exist" && setIsFavorite(true)
       );
   }, [token]);
 

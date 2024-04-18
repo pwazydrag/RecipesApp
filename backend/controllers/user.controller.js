@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const user = require("../models/user.model");
 const bcrypt = require("bcrypt");
 
@@ -50,7 +51,37 @@ const loginUser = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { token } = req.query;
+
+    const decodedToken = jwt.verify(token, process.env.JWTPRIVATEKEY);
+    const userId = id || decodedToken._id;
+
+    const userOne = await user.findOne(
+      {
+        _id: userId,
+      },
+      { _id: 1, username: 1, email: 1, registration: 1 }
+    );
+
+    if (!userOne) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (userId === decodedToken._id) {
+      res.status(200).json({ user: userOne, check: true });
+    } else {
+      res.status(200).json({ user: userOne, check: false });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  getUser,
 };

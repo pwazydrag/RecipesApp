@@ -12,6 +12,13 @@ export type Recipe = {
   img: string;
 };
 
+export type User = {
+  _id: string;
+  username: string;
+  email: string;
+  registration: Date;
+};
+
 export type Author = {
   _id: string;
   username: string;
