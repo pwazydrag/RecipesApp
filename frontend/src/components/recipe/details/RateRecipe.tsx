@@ -16,9 +16,7 @@ const RateRecipe = () => {
     token &&
       id &&
       fetchData(`${baseUrl}/recipes/rates/${id}?token=${token}`).then(
-        (fetchedData) => {
-          setUserStarRating(fetchedData?.value);
-        }
+        (fetchedData) => setUserStarRating(fetchedData?.value)
       );
   }, [token]);
 

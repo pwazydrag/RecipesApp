@@ -4,6 +4,7 @@ import { Recipe } from "../../utils/types";
 import RecipeCard from "../shared/RecipeCard";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import PagesList from "../shared/PagesList";
 
 type SearchResultProps = {
   recipes: Recipe[];
@@ -46,20 +47,11 @@ const SearchResult = ({ recipes, hideResults }: SearchResultProps) => {
         ))}
       </div>
       {numberOfPages > 1 && (
-        <ul className="flex justify-center mt-8 mb-8 list-none">
-          {Array.from({ length: numberOfPages }, (_, i) => (
-            <li
-              key={i}
-              className={`mx-2 cursor-pointer ${
-                currentPage === i + 1 ? "font-bold" : ""
-              }`}
-            >
-              <button type="button" onClick={() => paginate(i + 1)}>
-                {i + 1}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <PagesList
+          arrayLength={numberOfPages}
+          currentPage={currentPage}
+          paginate={paginate}
+        />
       )}
     </div>
   );

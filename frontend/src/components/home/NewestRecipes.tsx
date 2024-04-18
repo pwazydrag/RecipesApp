@@ -2,6 +2,7 @@ import { Recipe } from "../../utils/types";
 import RecipeCard from "../shared/RecipeCard";
 import usePaginate from "../../hooks/usePaginate";
 import { calculateAverageRating } from "../../utils/calculateAverage";
+import PagesList from "../shared/PagesList";
 
 type NewestRecipesProps = {
   data: Recipe[];
@@ -27,19 +28,11 @@ const NewestRecipes = ({ data }: NewestRecipesProps) => {
           />
         ))}
       </div>
-      <ul className="flex justify-center mt-8 mb-8 list-none">
-        {Array.from({ length: 3 }, (_, i) => (
-          <li
-            key={i}
-            className={`mx-2 cursor-pointer ${
-              currentPage === i + 1 ? "font-bold" : ""
-            }`}
-            onClick={() => paginate(i + 1)}
-          >
-            {i + 1}
-          </li>
-        ))}
-      </ul>
+      <PagesList
+        arrayLength={3}
+        currentPage={currentPage}
+        paginate={paginate}
+      />
     </div>
   );
 };

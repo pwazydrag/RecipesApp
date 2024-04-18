@@ -1,6 +1,7 @@
 import usePaginate from "../../hooks/usePaginate";
 import { calculateAverageRating } from "../../utils/calculateAverage";
 import { Recipe } from "../../utils/types";
+import PagesList from "../shared/PagesList";
 import RecipeCard from "../shared/RecipeCard";
 
 type BestRecipesProps = {
@@ -36,19 +37,11 @@ const BestRecipes = ({ data }: BestRecipesProps) => {
           />
         ))}
       </div>
-      <ul className="flex justify-center mt-8 mb-8 list-none">
-        {Array.from({ length: 3 }, (_, i) => (
-          <li
-            key={i}
-            className={`mx-2 cursor-pointer ${
-              currentPage === i + 1 ? "font-bold" : ""
-            }`}
-            onClick={() => paginate(i + 1)}
-          >
-            {i + 1}
-          </li>
-        ))}
-      </ul>
+      <PagesList
+        arrayLength={3}
+        currentPage={currentPage}
+        paginate={paginate}
+      />
     </div>
   );
 };

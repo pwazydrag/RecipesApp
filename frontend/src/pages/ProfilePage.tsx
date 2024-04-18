@@ -5,7 +5,7 @@ import useFetchUser from "../hooks/useFetchUser";
 
 const ProfilePage = () => {
   const { id } = useParams();
-  const { data, isError, isLoading } = useFetchUser({ id });
+  const { data, isError, isLoading, refetchData } = useFetchUser({ id });
 
   if (isLoading)
     return (
@@ -24,7 +24,12 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Profile user={data.user} userCheck={data.check} />
+      <Profile
+        user={data.user}
+        userCheck={data.check}
+        userRecipes={data.userRecipes}
+        refetchData={refetchData}
+      />
     </>
   );
 };

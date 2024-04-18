@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
-const user = require("../models/user.model");
 const bcrypt = require("bcrypt");
+const user = require("../models/user.model");
+const recipe = require("../models/recipe.model");
 
 const registerUser = async (req, res) => {
   const { data } = req.body;
@@ -56,8 +57,12 @@ const getUser = async (req, res) => {
     const { id } = req.params;
     const { token } = req.query;
 
-    const decodedToken = jwt.verify(token, process.env.JWTPRIVATEKEY);
-    const userId = id || decodedToken._id;
+    let decodedToken;
+    if (token !== "") {
+      decodedToken = jwt.verify(token, process.env.JWTPRIVATEKEY);
+    }
+
+    const userId = id || decodedToken?._id;
 
     const userOne = await user.findOne(
       {
@@ -70,10 +75,19 @@ const getUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (userId === decodedToken._id) {
-      res.status(200).json({ user: userOne, check: true });
+    const recipes = await recipe
+      .find({ author: userId })
+      .select("rating title img")
+      .populate("rating", "value");
+
+    if (userId === decodedToken?._id) {
+      res
+        .status(200)
+        .json({ user: userOne, check: true, userRecipes: recipes });
     } else {
-      res.status(200).json({ user: userOne, check: false });
+      res
+        .status(200)
+        .json({ user: userOne, check: false, userRecipes: recipes });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

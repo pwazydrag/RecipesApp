@@ -38,10 +38,8 @@ const RegistrationForm = () => {
   const onSubmit = async (data: FormData) => {
     const response = await postDataNotAuth(`${baseUrl}/users/register`, data);
     if (response.status === 403) {
-      console.log("Taki użytkownik już istnieje!");
       setIsError(true);
     } else if (response.status === 200) {
-      console.log("Poprawnie zarejestrowano!");
       setIsError(false);
       login(response.data);
       navigate("/", { replace: true });

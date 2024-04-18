@@ -67,7 +67,7 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
     const response = await postDataAuth(`${baseUrl}/recipes`, data, token);
     if (response.status === 200) {
       setIsError(false);
-      navigate("/");
+      navigate(`/details/${response.data._id}`);
     } else if (response.status === 401) {
       setIsError(true);
     } else {
