@@ -3,7 +3,7 @@ export const deleteData = async (target: string, token: string) => {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      ...(!!token ? { Authorization: "Bearer " + token } : {}),
+      Authorization: "Bearer " + token,
     },
   });
 
