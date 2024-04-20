@@ -72,12 +72,8 @@ const createRecipe = async (req, res) => {
           unit: unitId._id,
           recipe: createdRecipe._id,
         });
-        try {
-          const createdIngredient = await newIngredient.save();
-          ingredientIds.push(createdIngredient._id);
-        } catch (error) {
-          return res.status(500).json({ message: error.message });
-        }
+        const createdIngredient = await newIngredient.save();
+        ingredientIds.push(createdIngredient._id);
       }
 
       await ingredient.updateMany(
@@ -85,14 +81,10 @@ const createRecipe = async (req, res) => {
         { recipe: createdRecipe._id }
       );
 
-      try {
-        await recipe.findByIdAndUpdate(createdRecipe._id, {
-          ingredients: ingredientIds,
-        });
-        res.status(200).json(createdRecipe);
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-      }
+      await recipe.findByIdAndUpdate(createdRecipe._id, {
+        ingredients: ingredientIds,
+      });
+      res.status(200).json(createdRecipe);
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -101,16 +93,61 @@ const createRecipe = async (req, res) => {
 
 const updateRecipe = async (req, res) => {
   try {
-    const { id } = req.params;
+    verifyToken(req, res, async () => {
+      const { id } = req.params;
+      const { data } = req.body;
 
-    const recipeOne = await recipe.findByIdAndUpdate(id, req.body);
+      const userId = req.user;
+      const { ingredients } = data;
+      const categoryId = await category.findOne({ name: data.category });
 
-    if (!recipeOne) {
-      return res.status(404).json({ message: "Recipe not found" });
-    }
+      const dataToUpdate = {
+        title: data.title,
+        category: categoryId._id,
+        preparationTime: data.preparationTime,
+        preparation: data.preparation.map(({ step }) => step),
+        img: data.img,
+      };
 
-    const updatedRecipe = await recipe.findById(id);
-    res.status(200).json(updatedRecipe);
+      const recipeToUpdate = await recipe.findOneAndUpdate(
+        { _id: id, author: userId },
+        dataToUpdate,
+        { new: true }
+      );
+
+      if (!recipeToUpdate) {
+        return res.status(404).json({ message: "Recipe not found" });
+      }
+
+      if (ingredients) {
+        await ingredient.deleteMany({
+          _id: { $in: recipeToUpdate.ingredients },
+        });
+      }
+
+      const ingredientIds = [];
+      for (const ingredientData of data.ingredients) {
+        const unitId = await unit.findOne({ name: ingredientData.unit });
+        const newIngredient = new ingredient({
+          name: ingredientData.name,
+          amount: ingredientData.amount,
+          unit: unitId._id,
+          recipe: recipeToUpdate._id,
+        });
+        const createdIngredient = await newIngredient.save();
+        ingredientIds.push(createdIngredient._id);
+      }
+
+      await ingredient.updateMany(
+        { _id: { $in: ingredientIds } },
+        { recipe: recipeToUpdate._id }
+      );
+
+      await recipe.findByIdAndUpdate(recipeToUpdate._id, {
+        ingredients: ingredientIds,
+      });
+      res.status(200).json(recipeToUpdate);
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

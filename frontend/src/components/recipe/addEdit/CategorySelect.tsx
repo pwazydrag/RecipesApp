@@ -6,7 +6,7 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { Category } from "../../../utils/types";
-import { FormData } from "./AddRecipe";
+import { FormData } from "./AddEditRecipe";
 import { UseFormRegister, FieldErrors } from "react-hook-form";
 
 type CategorySelectProps = {

@@ -1,6 +1,6 @@
 import { IconButton, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { FormData } from "./AddRecipe";
+import { FormData } from "./AddEditRecipe";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 type PreparationInputProps = {

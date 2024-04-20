@@ -5,9 +5,10 @@ import useFetchUser from "../hooks/useFetchUser";
 
 const ProfilePage = () => {
   const { id } = useParams();
-  const { data, isError, isLoading, refetchData } = useFetchUser({ id });
+  const { userData, isUserError, isUserLoading, refetchUserData } =
+    useFetchUser({ id });
 
-  if (isLoading)
+  if (isUserLoading)
     return (
       <div className="flex flex-col justify-center items-center h-screen">
         <CircularProgress />
@@ -15,7 +16,7 @@ const ProfilePage = () => {
       </div>
     );
 
-  if (isError || !data)
+  if (isUserError || !userData)
     return (
       <div className="flex flex-col justify-center items-center h-screen">
         <p>Coś poszło nie tak - przepraszamy!</p>
@@ -25,10 +26,10 @@ const ProfilePage = () => {
   return (
     <>
       <Profile
-        user={data.user}
-        userCheck={data.check}
-        userRecipes={data.userRecipes}
-        refetchData={refetchData}
+        user={userData.user}
+        userCheck={userData.check}
+        userRecipes={userData.userRecipes}
+        refetchData={refetchUserData}
       />
     </>
   );

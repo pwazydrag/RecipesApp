@@ -5,23 +5,23 @@ import { fetchData } from "../utils/fetchData";
 import { Recipe } from "../utils/types";
 
 const useFetchRecipes = () => {
-  const [data, setData] = useState<Recipe[] | undefined>();
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [recipesData, setRecipesData] = useState<Recipe[] | undefined>();
+  const [isRecipesError, setIsRecipesError] = useState(false);
+  const [isRecipesLoading, setIsRecipesLoading] = useState(true);
 
   useEffect(() => {
     fetchData(`${baseUrl}/recipes/`)
       .then((fetchedData) => {
-        setData(fetchedData);
-        setIsLoading(false);
+        setRecipesData(fetchedData);
+        setIsRecipesLoading(false);
       })
       .catch(() => {
-        setIsError(true);
+        setIsRecipesError(true);
         console.error("Fetch error...");
       });
   }, []);
 
-  return { data, isError, isLoading };
+  return { recipesData, isRecipesError, isRecipesLoading };
 };
 
 export default useFetchRecipes;

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Unit } from "../../../utils/types";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { FormData } from "./AddRecipe";
+import { FormData } from "./AddEditRecipe";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 type IngredientInputProps = {

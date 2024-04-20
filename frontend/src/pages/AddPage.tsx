@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import AddRecipe from "../components/recipe/add/AddRecipe";
+import AddEditRecipe from "../components/recipe/addEdit/AddEditRecipe";
 import useFetchCategories from "../hooks/useFetchCategories";
 import useFetchUnits from "../hooks/useFetchUnits";
 
@@ -25,7 +25,11 @@ const AddPage = () => {
 
   return (
     <>
-      <AddRecipe categories={categoriesData} units={unitsData} />
+      <AddEditRecipe
+        categories={categoriesData}
+        units={unitsData}
+        isEdit={false}
+      />
     </>
   );
 };

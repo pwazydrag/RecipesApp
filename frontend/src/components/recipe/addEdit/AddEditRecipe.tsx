@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import classes from "./AddRecipe.module.css";
-import { Category, Unit } from "../../../utils/types";
+import { Category, Recipe, Unit } from "../../../utils/types";
 import CategorySelect from "./CategorySelect";
 import { TextField } from "@mui/material";
 import IngredientInput from "./IngredientInput";
@@ -10,6 +9,8 @@ import PreparationInput from "./PreparationInput";
 import { useAuth } from "../../../hooks/useAuth";
 import { baseUrl } from "../../../utils/constant";
 import { postDataAuth } from "../../../utils/postData";
+import { updateData } from "../../../utils/updateData";
+import classes from "./AddRecipe.module.css";
 
 export type FormData = {
   title: string;
@@ -26,12 +27,19 @@ export type FormData = {
   img: string;
 };
 
-type AddRecipeProps = {
+type AddEditRecipeProps = {
   categories: Category[];
   units: Unit[];
+  isEdit: boolean;
+  editData?: Recipe;
 };
 
-const AddRecipe = ({ categories, units }: AddRecipeProps) => {
+const AddEditRecipe = ({
+  categories,
+  units,
+  isEdit,
+  editData,
+}: AddEditRecipeProps) => {
   const {
     register,
     handleSubmit,
@@ -39,12 +47,22 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
     control,
   } = useForm<FormData>({
     defaultValues: {
-      title: "",
-      category: "",
-      preparationTime: 0,
-      ingredients: [{ name: "", amount: 0, unit: "" }],
-      preparation: [{ step: "" }],
-      img: "",
+      title: isEdit && editData ? editData.title : "",
+      category: isEdit && editData ? editData.category.name : "",
+      preparationTime: isEdit && editData ? editData.preparationTime : 0,
+      ingredients:
+        isEdit && editData
+          ? editData.ingredients.map((ingredient) => ({
+              name: ingredient.name,
+              amount: ingredient.amount,
+              unit: ingredient.unit.name,
+            }))
+          : [{ name: "", amount: 0, unit: "" }],
+      preparation:
+        isEdit && editData
+          ? editData.preparation.map((step) => ({ step }))
+          : [{ step: "" }],
+      img: isEdit && editData ? editData.img : "",
     },
     mode: "onBlur",
   });
@@ -64,7 +82,16 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
   const [isError, setIsError] = useState(false);
 
   const onSubmit = async (data: FormData) => {
-    const response = await postDataAuth(`${baseUrl}/recipes`, data, token);
+    let response;
+    if (isEdit && editData) {
+      response = await updateData(
+        `${baseUrl}/recipes/${editData._id}`,
+        data,
+        token
+      );
+    } else {
+      response = await postDataAuth(`${baseUrl}/recipes`, data, token);
+    }
     if (response.status === 200) {
       setIsError(false);
       navigate(`/details/${response.data._id}`);
@@ -82,7 +109,7 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
       onSubmit={handleSubmit(onSubmit)}
       className={`${classes.addForm} w-8/12 md:w-9/12 lg:w-7/12 p-11 mt-4 mx-auto`}
     >
-      <h2>Dodaj przepis</h2>
+      <h2>{isEdit ? "Edytuj przepis" : "Dodaj przepis"}</h2>
       <h4>Generalne informacje</h4>
       <TextField
         label="Tytuł przepisu"
@@ -192,10 +219,10 @@ const AddRecipe = ({ categories, units }: AddRecipeProps) => {
         <p className="text-red-500">Coś poszło nie tak! Spróbuj ponownie</p>
       )}
       <button type="submit" className={`${classes.submitBtn} mt-3`}>
-        Dodaj przepis
+        {isEdit ? "Edytuj przepis" : "Dodaj przepis"}
       </button>
     </form>
   );
 };
 
-export default AddRecipe;
+export default AddEditRecipe;

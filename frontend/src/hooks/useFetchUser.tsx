@@ -16,11 +16,11 @@ type UseFetchUserProps = {
 };
 
 const useFetchUser = ({ id }: UseFetchUserProps) => {
-  const [data, setData] = useState<UserFetchData | undefined>();
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState<UserFetchData | undefined>();
+  const [isUserError, setIsUserError] = useState(false);
+  const [isUserLoading, setIsUserLoading] = useState(true);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
-  const refetchData = () => {
+  const refetchUserData = () => {
     setRefreshTrigger((value) => !value);
   };
   const { token } = useAuth();
@@ -28,16 +28,16 @@ const useFetchUser = ({ id }: UseFetchUserProps) => {
   useEffect(() => {
     fetchData(`${baseUrl}/users/${id ?? ""}?token=${token}`)
       .then((fetchedData) => {
-        setData(fetchedData);
-        setIsLoading(false);
+        setUserData(fetchedData);
+        setIsUserLoading(false);
       })
       .catch(() => {
-        setIsError(true);
+        setIsUserError(true);
         console.error("Fetch error...");
       });
   }, [token, refreshTrigger]);
 
-  return { data, isError, isLoading, refetchData };
+  return { userData, isUserError, isUserLoading, refetchUserData };
 };
 
 export default useFetchUser;

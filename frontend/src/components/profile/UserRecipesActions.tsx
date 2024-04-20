@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { baseUrl } from "../../utils/constant";
 import { deleteData } from "../../utils/deleteData";
@@ -12,13 +13,21 @@ const UserRecipesActions = ({
   refetchData,
 }: UserRecipesActionsProps) => {
   const { token } = useAuth();
+  const navigate = useNavigate();
 
   const deleteRecipe = async () =>
     await deleteData(`${baseUrl}/recipes/${recipeId}`, token).then(refetchData);
 
+  const editRecipe = async () => {
+    navigate(`/edit/${recipeId}`);
+  };
+
   return (
     <div className="flex justify-between">
-      <h3 className="flex-1 hover:transition-all hover:ease-in-out hover:text-yellow-400 active:text-yellow-400 cursor-pointer">
+      <h3
+        onClick={editRecipe}
+        className="flex-1 hover:transition-all hover:ease-in-out hover:text-yellow-400 active:text-yellow-400 cursor-pointer"
+      >
         Edytuj
       </h3>
       <h3

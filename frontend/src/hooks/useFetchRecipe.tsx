@@ -9,23 +9,23 @@ type UseFetchRecipeProps = {
 };
 
 const useFetchRecipe = ({ id }: UseFetchRecipeProps) => {
-  const [data, setData] = useState<Recipe | undefined>();
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [recipeData, setRecipeData] = useState<Recipe | undefined>();
+  const [isRecipeError, setIsRecipeError] = useState(false);
+  const [isRecipeLoading, setIsRecipeLoading] = useState(true);
 
   useEffect(() => {
     fetchData(`${baseUrl}/recipes/${id}`)
       .then((fetchedData) => {
-        setData(fetchedData);
-        setIsLoading(false);
+        setRecipeData(fetchedData);
+        setIsRecipeLoading(false);
       })
       .catch(() => {
-        setIsError(true);
+        setIsRecipeError(true);
         console.error("Fetch error...");
       });
   }, [id]);
 
-  return { data, isError, isLoading };
+  return { recipeData, isRecipeError, isRecipeLoading };
 };
 
 export default useFetchRecipe;

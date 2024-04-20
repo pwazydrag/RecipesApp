@@ -3,9 +3,9 @@ import Home from "../components/home/Home";
 import useFetchRecipes from "../hooks/useFetchRecipes";
 
 const HomePage = () => {
-  const { data, isError, isLoading } = useFetchRecipes();
+  const { recipesData, isRecipesError, isRecipesLoading } = useFetchRecipes();
 
-  if (isLoading)
+  if (isRecipesLoading)
     return (
       <div className="flex flex-col justify-center items-center h-screen">
         <CircularProgress />
@@ -13,7 +13,7 @@ const HomePage = () => {
       </div>
     );
 
-  if (isError || !data)
+  if (isRecipesError || !recipesData)
     return (
       <div className="flex flex-col justify-center items-center h-screen">
         <p>Coś poszło nie tak - przepraszamy!</p>
@@ -22,7 +22,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Home data={data} />
+      <Home data={recipesData} />
     </>
   );
 };

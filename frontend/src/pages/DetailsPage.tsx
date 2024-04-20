@@ -6,11 +6,11 @@ import { CircularProgress } from "@mui/material";
 const DetailsPage = () => {
   const { id } = useParams();
 
-  const { data, isError, isLoading } = useFetchRecipe({
+  const { recipeData, isRecipeError, isRecipeLoading } = useFetchRecipe({
     id: id ?? "",
   });
 
-  if (isLoading)
+  if (isRecipeLoading)
     return (
       <div className="flex flex-col justify-center items-center h-screen">
         <CircularProgress />
@@ -18,7 +18,7 @@ const DetailsPage = () => {
       </div>
     );
 
-  if (isError || !data)
+  if (isRecipeError || !recipeData)
     return (
       <div className="flex flex-col justify-center items-center h-screen">
         <p>Coś nie tak z Twoim przepisem - przepraszamy!</p>
@@ -27,7 +27,7 @@ const DetailsPage = () => {
 
   return (
     <>
-      <RecipeDetails recipe={data} />
+      <RecipeDetails recipe={recipeData} />
     </>
   );
 };
