@@ -43,7 +43,7 @@ const Favorite = () => {
 
   return (
     <div>
-      <div className="flex flex-col bg-[#f4e8e8fe] rounded-3xl border border-gray-300 p-7 2xl:p-12 shadow-md w-[12rem]">
+      <div className="flex flex-col bg-[#f4e8e8fe] rounded-3xl border border-gray-300 p-7 2xl:p-12 shadow-md w-[12rem] h-24">
         <h3 className="whitespace-nowrap">Ulubione</h3>
         <button
           type="button"

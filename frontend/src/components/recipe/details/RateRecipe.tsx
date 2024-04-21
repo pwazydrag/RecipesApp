@@ -47,7 +47,7 @@ const RateRecipe = () => {
 
   return (
     <div>
-      <div className="mt-16 md:mt-0 bg-[#f4e8e8fe] rounded-3xl border border-gray-300 p-7 2xl:p-12 shadow-md w-[12rem]">
+      <div className="mt-16 md:mt-0 bg-[#f4e8e8fe] rounded-3xl border border-gray-300 p-7 2xl:p-12 shadow-md w-[12rem] h-24">
         <h3>Oceń przepis</h3>
         <Rating
           name="userRating"

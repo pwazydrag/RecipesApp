@@ -8,7 +8,7 @@ import IngredientSearch from "./IngredientSearch";
 import { baseUrl } from "../../utils/constant";
 import { postDataNotAuth } from "../../utils/postData";
 import SearchResult from "./SearchResult";
-import classes from "./SearchRecipe.module.css";
+import Button from "../shared/Button";
 
 export type FormData = {
   title: string;
@@ -68,7 +68,7 @@ const SearchRecipe = ({ categories }: SearchRecipeProps) => {
   return !searchResult ? (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={`${classes.searchForm} flex flex-col w-8/12 md:w-9/12 lg:w-7/12 p-11 mt-4 mx-auto`}
+      className="flex flex-col w-8/12 md:w-9/12 lg:w-7/12 mt-6 mx-auto"
     >
       <NameSearch register={register} />
       <CategorySearch categories={categories} control={control} />
@@ -84,21 +84,18 @@ const SearchRecipe = ({ categories }: SearchRecipeProps) => {
           />
         ))}
       </div>
-      <button
+      <Button
         type="button"
-        className={`${classes.addBtn} mt-8`}
+        text="Dodaj kolejny składnik"
+        mode="ingrPrep"
         onClick={() => ingredients.append({ name: "" }, { shouldFocus: false })}
-      >
-        Dodaj kolejny składnik
-      </button>
+      />
       {isError && (
         <p className="text-red-500 text-center mt-6">
           Nie odnaleźliśmy żadnych przepisów!
         </p>
       )}
-      <button type="submit" className={`${classes.submitBtn} mt-12`}>
-        Wyszukaj przepisy
-      </button>
+      <Button type="submit" text="Wyszukaj przepisy" />
     </form>
   ) : (
     <SearchResult recipes={searchResult} hideResults={hideSearchResult} />

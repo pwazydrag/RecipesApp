@@ -1,4 +1,3 @@
-import classes from "./RegistrationForm.module.css";
 import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 import { isEmailValid, arePasswordsCorrect } from "../../utils/formValidators";
@@ -7,6 +6,7 @@ import { postDataNotAuth } from "../../utils/postData";
 import { baseUrl } from "../../utils/constant";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import Button from "../shared/Button";
 
 type FormData = {
   username: string;
@@ -54,11 +54,11 @@ const RegistrationForm = () => {
   return (
     <>
       <form
-        className={`${classes.registrationForm} w-9/12 md:w-6/12 lg:w-4/12 p-11 mt-4 mx-auto`}
+        className="flex flex-col w-9/12 md:w-6/12 lg:w-4/12 mt-6 mx-auto gap-8"
         onSubmit={handleSubmit(onSubmit)}
       >
         <h2>Rejestracja</h2>
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-16">
           <TextField
             label="Nazwa użytkownika"
             InputLabelProps={{ shrink: true }}
@@ -76,7 +76,6 @@ const RegistrationForm = () => {
             })}
             error={!!errors.username}
             helperText={errors.username?.message}
-            className={classes.formInput}
           ></TextField>
           <TextField
             label="Adres email"
@@ -97,7 +96,6 @@ const RegistrationForm = () => {
             })}
             error={!!errors.email}
             helperText={errors.email?.message}
-            className={classes.formInput}
           ></TextField>
           <TextField
             label="Hasło"
@@ -116,7 +114,6 @@ const RegistrationForm = () => {
             })}
             error={!!errors.password}
             helperText={errors.password?.message}
-            className={classes.formInput}
           ></TextField>
           <TextField
             label="Powtórz hasło"
@@ -130,12 +127,9 @@ const RegistrationForm = () => {
             })}
             error={!!errors.repeatPassword}
             helperText={errors.repeatPassword?.message}
-            className={classes.formInput}
           ></TextField>
         </div>
-        <button type="submit" className={classes.submitBtn}>
-          Zarejestruj się
-        </button>
+        <Button type="submit" text="Zarejestruj się" />
       </form>
       {isError && <p>Błędne dane rejestracji! Spróbuj ponownie</p>}
     </>

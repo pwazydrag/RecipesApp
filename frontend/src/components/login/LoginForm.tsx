@@ -1,11 +1,11 @@
 import { useState } from "react";
-import classes from "./LoginForm.module.css";
 import { useForm } from "react-hook-form";
 import { TextField } from "@mui/material";
 import { baseUrl } from "../../utils/constant";
 import { postDataNotAuth } from "../../utils/postData";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import Button from "../shared/Button";
 
 type FormData = {
   username: string;
@@ -46,7 +46,7 @@ const LoginForm = () => {
 
   return (
     <form
-      className={`${classes.loginForm} w-9/12 md:w-6/12 lg:w-4/12 p-11 mt-4 mx-auto`}
+      className="flex flex-col w-9/12 md:w-6/12 lg:w-4/12 mt-6 mx-auto gap-8"
       onSubmit={handleSubmit(onSubmit)}
     >
       <h2>Logowanie</h2>
@@ -67,7 +67,6 @@ const LoginForm = () => {
           })}
           error={!!errors.username}
           helperText={errors.username?.message}
-          className={classes.formInput}
         ></TextField>
         <TextField
           label="Hasło"
@@ -86,16 +85,13 @@ const LoginForm = () => {
           })}
           error={!!errors.password}
           helperText={errors.password?.message}
-          className={classes.formInput}
         ></TextField>
         {isError && (
           <p className="text-red-500">
             Błędne dane logowania! Spróbuj ponownie
           </p>
         )}
-        <button type="submit" className={classes.submitBtn}>
-          Zaloguj się
-        </button>
+        <Button type="submit" text="Zaloguj się" />
         <Link
           to="/register"
           className="no-underline hover:transition-all hover:ease-in-out hover:text-red-400 active:text-red-400"

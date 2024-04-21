@@ -1,4 +1,3 @@
-import classes from "./RecipeDetails.module.css";
 import { calculateAverageRating } from "../../../utils/calculateAverage";
 import { Recipe } from "../../../utils/types";
 import Comments from "./Comments";
@@ -13,7 +12,7 @@ type RecipeDetailsProps = {
 
 const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
   return (
-    <div className={classes.recipeDetails}>
+    <div className="flex flex-col w-8/12 my-4 mx-auto text-center">
       <RecipeGeneralInfo
         title={recipe.title}
         author={recipe.author}

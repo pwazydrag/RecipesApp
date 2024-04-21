@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { TextField } from "@mui/material";
-import classes from "./Comments.module.css";
+
 import { baseUrl } from "../../../utils/constant";
 import { postDataAuth } from "../../../utils/postData";
+import Button from "../../shared/Button";
 
 type FormData = {
   comment: string;
@@ -60,7 +61,7 @@ const NewComment = ({ hasComments, refetchData }: newCommentProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-5 bg-white rounded-2xl border border-solid border-red-300 shadow-md px-5 mt-5"
+      className="flex flex-col gap-5 bg-white rounded-2xl border border-solid border-red-300 shadow-md px-5 mt-5 mb-12"
     >
       {hasComments && <h3 className="mt-6">Dodaj nowy komentarz!</h3>}
       {!hasComments && (
@@ -86,9 +87,9 @@ const NewComment = ({ hasComments, refetchData }: newCommentProps) => {
         helperText={errors.comment?.message}
       ></TextField>
       {isError && <p className="text-red-500">Zaloguj się aby skomentować!</p>}
-      <button type="submit" className={`${classes.submitBtn} mb-7`}>
-        Skomentuj
-      </button>
+      <div className="flex flex-col my-5">
+        <Button type="submit" text="Skomentuj" />
+      </div>
     </form>
   );
 };

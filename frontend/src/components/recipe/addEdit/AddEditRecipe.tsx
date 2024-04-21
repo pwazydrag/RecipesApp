@@ -10,7 +10,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import { baseUrl } from "../../../utils/constant";
 import { postDataAuth } from "../../../utils/postData";
 import { updateData } from "../../../utils/updateData";
-import classes from "./AddRecipe.module.css";
+import Button from "../../shared/Button";
 
 export type FormData = {
   title: string;
@@ -107,7 +107,7 @@ const AddEditRecipe = ({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={`${classes.addForm} w-8/12 md:w-9/12 lg:w-7/12 p-11 mt-4 mx-auto`}
+      className="flex flex-col w-8/12 md:w-9/12 lg:w-7/12 mt-4 mx-auto gap-10"
     >
       <h2>{isEdit ? "Edytuj przepis" : "Dodaj przepis"}</h2>
       <h4>Generalne informacje</h4>
@@ -168,18 +168,17 @@ const AddEditRecipe = ({
           onRemove={() => ingredients.remove(index)}
         />
       ))}
-      <button
+      <Button
         type="button"
-        className={classes.addBtn}
+        text="Dodaj kolejny składnik"
+        mode="ingrPrep"
         onClick={() =>
           ingredients.append(
             { name: "", amount: 0, unit: "" },
             { shouldFocus: false }
           )
         }
-      >
-        Dodaj kolejny składnik
-      </button>
+      />
       <h4>Napisz krok po kroku jak przygotować przepis </h4>
       {preparation.fields.map((step, index) => (
         <PreparationInput
@@ -190,13 +189,12 @@ const AddEditRecipe = ({
           onRemove={() => preparation.remove(index)}
         />
       ))}
-      <button
+      <Button
         type="button"
-        className={classes.addBtn}
+        text="Dodaj kolejny krok"
+        mode="ingrPrep"
         onClick={() => preparation.append({ step: "" }, { shouldFocus: false })}
-      >
-        Dodaj kolejny krok
-      </button>
+      />
       <h4>Dodaj zdjęcie przepisu</h4>
       <TextField
         label="Link do zdjęcia"
@@ -218,9 +216,10 @@ const AddEditRecipe = ({
       {isError && (
         <p className="text-red-500">Coś poszło nie tak! Spróbuj ponownie</p>
       )}
-      <button type="submit" className={`${classes.submitBtn} mt-3`}>
-        {isEdit ? "Edytuj przepis" : "Dodaj przepis"}
-      </button>
+      <Button
+        type="submit"
+        text={isEdit ? "Edytuj przepis" : "Dodaj przepis"}
+      />
     </form>
   );
 };

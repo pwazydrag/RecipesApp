@@ -70,7 +70,7 @@ const RecipeGeneralInfo = ({
         <img
           src={img}
           alt="Zdjęcie przepisu"
-          className="w-[80%] lg:w-[60%] mt-6 mb-3 object-cover object-center rounded-2xl border border-solid border-red-300 shadow-md"
+          className="w-[100%] lg:w-[85%] mt-6 mb-3 object-cover object-center rounded-2xl border border-solid border-red-300 shadow-md"
         />
       </figure>
     </div>

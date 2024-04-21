@@ -47,7 +47,7 @@ const Comments = ({ recipeId }: CommentsProps) => {
           >
             <h4 className="mt-4">
               <span
-                className="hover:transition-all hover:ease-in-out hover:text-red-400 active:text-red-400 cursor-pointer"
+                className="hover:transition-all hover:ease-in-out hover:text-red-400 duration-300 cursor-pointer"
                 onClick={() =>
                   navigateToAuthorProfile(commentSingle.author._id)
                 }
