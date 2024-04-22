@@ -1,7 +1,7 @@
-import { CircularProgress } from "@mui/material";
-import AddEditRecipe from "../components/recipe/addEdit/AddEditRecipe";
 import useFetchCategories from "../hooks/useFetchCategories";
 import useFetchUnits from "../hooks/useFetchUnits";
+import { CircularProgress } from "@mui/material";
+import AddEditRecipe from "../components/recipe/addEdit/AddEditRecipe";
 
 const AddPage = () => {
   const { categoriesData, isCategoryError, isCategoryLoading } =

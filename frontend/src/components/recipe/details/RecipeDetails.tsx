@@ -22,7 +22,7 @@ const RecipeDetails = ({ recipe }: RecipeDetailsProps) => {
         averageRating={calculateAverageRating(recipe.rating)}
         img={recipe.img}
       ></RecipeGeneralInfo>
-      <Actions></Actions>
+      <Actions likes={recipe.likes.length}></Actions>
       <Ingredients ingredients={recipe.ingredients}></Ingredients>
       <Preparation preparation={recipe.preparation}></Preparation>
       <Comments recipeId={recipe._id}></Comments>

@@ -9,6 +9,7 @@ export type Recipe = {
   preparation: string[];
   rating: Rating[];
   comments: Comment[];
+  likes: Favorite[];
   img: string;
 };
 
@@ -56,4 +57,10 @@ export type Ingredient = {
 export type Unit = {
   _id: string;
   name: string;
+};
+
+export type Favorite = {
+  _id: string;
+  user: string;
+  recipe: string;
 };

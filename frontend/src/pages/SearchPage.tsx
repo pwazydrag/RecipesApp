@@ -1,5 +1,5 @@
 import useFetchCategories from "../hooks/useFetchCategories";
-import SearchRecipe from "../components/search/SearchRecipe";
+import SearchRecipe from "../components/recipe/search/SearchRecipe";
 import { CircularProgress } from "@mui/material";
 
 const RegisterPage = () => {

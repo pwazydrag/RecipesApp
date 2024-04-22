@@ -29,6 +29,11 @@ const MainNavigation = () => {
     navigate("/profile");
   };
 
+  const navigateToFavorites = () => {
+    handleClose();
+    navigate("/favorites");
+  };
+
   return (
     <header className="w-full bg-gray-500 shadow-lg text-white text-xs md:text-base">
       <nav className="flex justify-between h-16 items-center px-8">
@@ -102,6 +107,9 @@ const MainNavigation = () => {
                 onClose={handleClose}
               >
                 <MenuItem onClick={navigateToProfile}>Mój profil</MenuItem>
+                <MenuItem onClick={navigateToFavorites}>
+                  Ulubione przepisy
+                </MenuItem>
                 <MenuItem onClick={handleLogout}>Wyloguj</MenuItem>
               </Menu>
             </div>

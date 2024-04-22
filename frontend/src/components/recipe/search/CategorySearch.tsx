@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import { Category } from "../../utils/types";
+import { Category } from "../../../utils/types";
 import { Control, Controller } from "react-hook-form";
 import { FormData } from "./SearchRecipe";
 

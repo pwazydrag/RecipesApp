@@ -9,6 +9,7 @@ import AddPage from "./pages/AddPage";
 import SearchPage from "./pages/SearchPage";
 import ProfilePage from "./pages/ProfilePage";
 import EditPage from "./pages/EditPage";
+import FavoritesPage from "./pages/FavoritesPage";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "/search", element: <SearchPage /> },
       { path: "/profile", element: <ProfilePage /> },
       { path: "/profile/:id", element: <ProfilePage /> },
+      { path: "/favorites", element: <FavoritesPage /> },
     ],
   },
 ]);

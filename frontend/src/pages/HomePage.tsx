@@ -1,6 +1,6 @@
+import useFetchRecipes from "../hooks/useFetchRecipes";
 import { CircularProgress } from "@mui/material";
 import Home from "../components/home/Home";
-import useFetchRecipes from "../hooks/useFetchRecipes";
 
 const HomePage = () => {
   const { recipesData, isRecipesError, isRecipesLoading } = useFetchRecipes();

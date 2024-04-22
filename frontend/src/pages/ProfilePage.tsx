@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
+import useFetchUser from "../hooks/useFetchUser";
 import { CircularProgress } from "@mui/material";
 import Profile from "../components/profile/Profile";
-import useFetchUser from "../hooks/useFetchUser";
 
 const ProfilePage = () => {
   const { id } = useParams();

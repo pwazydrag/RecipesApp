@@ -1,10 +1,10 @@
-import usePaginate from "../../hooks/usePaginate";
-import { calculateAverageRating } from "../../utils/calculateAverage";
-import { Recipe } from "../../utils/types";
-import RecipeCard from "../shared/RecipeCard";
+import usePaginate from "../../../hooks/usePaginate";
+import { calculateAverageRating } from "../../../utils/calculateAverage";
+import { Recipe } from "../../../utils/types";
+import RecipeCard from "../../shared/RecipeCard";
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import PagesList from "../shared/PagesList";
+import PagesList from "../../shared/PagesList";
 
 type SearchResultProps = {
   recipes: Recipe[];

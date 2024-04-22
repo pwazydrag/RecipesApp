@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const user = require("../models/user.model");
 const recipe = require("../models/recipe.model");
+const favorite = require("../models/favorite.model");
 
 const registerUser = async (req, res) => {
   const { data } = req.body;
@@ -61,7 +62,6 @@ const getUser = async (req, res) => {
     if (token !== "") {
       decodedToken = jwt.verify(token, process.env.JWTPRIVATEKEY);
     }
-
     const userId = id || decodedToken?._id;
 
     const userOne = await user.findOne(
@@ -94,8 +94,31 @@ const getUser = async (req, res) => {
   }
 };
 
+const getUserFavorites = async (req, res) => {
+  try {
+    const { token } = req.query;
+    const decodedToken = jwt.verify(token, process.env.JWTPRIVATEKEY);
+    const userId = decodedToken._id;
+
+    const favorites = await favorite.find({ user: userId }).select("recipe");
+    const favoriteRecipeIds = favorites.map((fav) => fav.recipe);
+
+    const favoriteRecipes = await recipe
+      .find({
+        _id: { $in: favoriteRecipeIds },
+      })
+      .select("rating title img")
+      .populate("rating", "value");
+
+    res.status(200).json(favoriteRecipes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUser,
+  getUserFavorites,
 };

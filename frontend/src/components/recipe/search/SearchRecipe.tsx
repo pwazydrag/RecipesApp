@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { Category, Recipe } from "../../utils/types";
+import { Category, Recipe } from "../../../utils/types";
 import NameSearch from "./TitleSearch";
 import CategorySearch from "./CategorySearch";
 import PreparationTimeSearch from "./PreparationTimeSearch";
 import IngredientSearch from "./IngredientSearch";
-import { baseUrl } from "../../utils/constant";
-import { postDataNotAuth } from "../../utils/postData";
+import { baseUrl } from "../../../utils/constant";
+import { postDataNotAuth } from "../../../utils/postData";
 import SearchResult from "./SearchResult";
-import Button from "../shared/Button";
+import Button from "../../shared/Button";
 
 export type FormData = {
   title: string;
